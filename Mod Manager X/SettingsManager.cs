@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
@@ -14,6 +15,26 @@ namespace Mod_Manager_X
         public bool GridLoggingEnabled { get; set; } = false;
         public bool ShowOrangeAnimation { get; set; } = true;
         public int SelectedPresetIndex { get; set; } = 0; // 0 = default
+        
+        // Game-specific ModLibrary paths
+        public Dictionary<string, string> GameModLibraryPaths { get; set; } = new Dictionary<string, string>
+        {
+            { "ZenlessZoneZero", @".\ModLibrary\ZZ" },
+            { "GenshinImpact", @".\ModLibrary\GI" },
+            { "HonkaiImpact3rd", @".\ModLibrary\HI" },
+            { "HonkaiStarRail", @".\ModLibrary\SR" },
+            { "WutheringWaves", @".\ModLibrary\WW" }
+        };
+        
+        // Game-specific XXMI Mods paths
+        public Dictionary<string, string> GameXXMIModsPaths { get; set; } = new Dictionary<string, string>
+        {
+            { "ZenlessZoneZero", @".\XXMI\ZZMI\Mods" },
+            { "GenshinImpact", @".\XXMI\GIMI\Mods" },
+            { "HonkaiImpact3rd", @".\XXMI\HIMI\Mods" },
+            { "HonkaiStarRail", @".\XXMI\SRMI\Mods" },
+            { "WutheringWaves", @".\XXMI\WWMI\Mods" }
+        };
         
         // StatusKeeper settings
         public string StatusKeeperD3dxUserIniPath { get; set; } = AppConstants.DEFAULT_D3DX_USER_INI_PATH;
@@ -75,6 +96,26 @@ namespace Mod_Manager_X
             Current.Theme = "Auto";
             Current.ShowOrangeAnimation = true;
             Current.SelectedPresetIndex = 0;
+            
+            // Reset game-specific paths to defaults
+            Current.GameModLibraryPaths = new Dictionary<string, string>
+            {
+                { "ZenlessZoneZero", @".\ModLibrary\ZZ" },
+                { "GenshinImpact", @".\ModLibrary\GI" },
+                { "HonkaiImpact3rd", @".\ModLibrary\HI" },
+                { "HonkaiStarRail", @".\ModLibrary\SR" },
+                { "WutheringWaves", @".\ModLibrary\WW" }
+            };
+            
+            Current.GameXXMIModsPaths = new Dictionary<string, string>
+            {
+                { "ZenlessZoneZero", @".\XXMI\ZZMI\Mods" },
+                { "GenshinImpact", @".\XXMI\GIMI\Mods" },
+                { "HonkaiImpact3rd", @".\XXMI\HIMI\Mods" },
+                { "HonkaiStarRail", @".\XXMI\SRMI\Mods" },
+                { "WutheringWaves", @".\XXMI\WWMI\Mods" }
+            };
+            
             Save();
         }
 

@@ -32,9 +32,9 @@
 
   <!-- Foldery projektu -->
   <ItemGroup>
+    <Folder Include="ModLibrary\Nowy folder\" />
     <Folder Include="Settings\" />
     <Folder Include="XXMI\" />
-    <Folder Include="ModLibrary\" />
   </ItemGroup>
 
   <!-- Kopiowanie wszystkich plików i podfolderów z folderów projektu do katalogu wyjściowego -->

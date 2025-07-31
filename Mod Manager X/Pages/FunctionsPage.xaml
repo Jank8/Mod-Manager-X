@@ -42,6 +42,29 @@
         <ScrollViewer x:Name="FunctionContentScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="FunctionContentPanel" Spacing="15" Margin="0,0,24,0">
                 
+                <!-- Game Selector Content -->
+                <StackPanel x:Name="GameSelectorPanel" Spacing="16" Visibility="Collapsed">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="32"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="CurrentGameLabel" Text="Current Game:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="14" FontWeight="SemiBold"/>
+                        <ComboBox x:Name="GameSelectionComboBox" Grid.Row="0" Grid.Column="2" Width="200" VerticalAlignment="Center" SelectionChanged="GameSelectionComboBox_SelectionChanged">
+                            <ComboBoxItem Content="Genshin Impact" Tag="GenshinImpact"/>
+                            <ComboBoxItem Content="Honkai: Star Rail" Tag="HonkaiStarRail"/>
+                            <ComboBoxItem Content="Zenless Zone Zero" Tag="ZenlessZoneZero"/>
+                            <ComboBoxItem Content="Wuthering Waves" Tag="WutheringWaves"/>
+                        </ComboBox>
+                        <TextBlock x:Name="GameDescriptionLabel" Text="Select the game you want to manage mods for. This affects mod library paths and function behavior." Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,8,0,0"/>
+                    </Grid>
+                </StackPanel>
+                
                 <!-- GameBanana Author Update Content -->
                 <StackPanel x:Name="GBAuthorUpdatePanel" Spacing="16" Visibility="Visible">
                     <Grid>
@@ -87,7 +110,7 @@
                             <ColumnDefinition Width="44"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Name="AutoDetectLabel" Text="" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="14"/>
-                        <ToggleSwitch x:Name="AutoDetectToggle" Grid.Row="0" Grid.Column="2" Width="44" MinWidth="0" VerticalAlignment="Center" IsOn="False" OffContent="" OnContent="" Toggled="AutoDetectToggle_Toggled" 
+                        <ToggleSwitch x:Name="AutoDetectToggle" Grid.Row="0" Grid.Column="2" Width="44" MinWidth="0" VerticalAlignment="Center" IsOn="True" OffContent="" OnContent="" Toggled="AutoDetectToggle_Toggled" 
                                       ToolTipService.ToolTip="Automatyczne uzupełnianie hotkey po dodaniu moda"/>
                         <TextBlock x:Name="RefreshAllLabel" Text="" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="14"/>
                         <ToggleSwitch x:Name="RefreshAllToggle" Grid.Row="1" Grid.Column="2" Width="44" MinWidth="0" VerticalAlignment="Center" IsOn="False" OffContent="" OnContent="" Toggled="RefreshAllToggle_Toggled"

@@ -841,6 +841,36 @@ namespace Mod_Manager_X.Pages
             NotifyMainWindowToUpdateHeartButton();
         }
 
+        public void RefreshForGame(string selectedGame)
+        {
+            try
+            {
+                _currentCategory = selectedGame; // Store current category
+                if (string.Equals(selectedGame, "other", StringComparison.OrdinalIgnoreCase))
+                {
+                    CategoryTitle.Text = LanguageManager.Instance.T("Category_Other_Mods");
+                    LoadMods(selectedGame);
+                }
+                else if (string.Equals(selectedGame, "Active", StringComparison.OrdinalIgnoreCase))
+                {
+                    CategoryTitle.Text = LanguageManager.Instance.T("Category_Active_Mods");
+                    LoadActiveModsOnly();
+                }
+                else
+                {
+                    CategoryTitle.Text = selectedGame;
+                    LoadMods(selectedGame);
+                }
+                
+                // Notify MainWindow to update heart button after category title is set
+                NotifyMainWindowToUpdateHeartButton();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to refresh for game {selectedGame}: {ex.Message}");
+            }
+        }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);

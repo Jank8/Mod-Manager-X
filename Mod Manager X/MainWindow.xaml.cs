@@ -37,6 +37,12 @@ namespace Mod_Manager_X
         {
             InitializeComponent();
 
+            // Load game selector settings
+            LoadGameSelectorSettings();
+            
+            // Initialize navigation menu based on selected game
+            UpdateNavigationMenuForSelectedGame();
+
             // Set AllModsButton translation
             AllModsButton.Content = LanguageManager.Instance.T("All_Mods");
             // Set button tooltip translations
@@ -910,6 +916,290 @@ namespace Mod_Manager_X
         public Frame? GetContentFrame() => contentFrame;
         public ProgressBar? GetOrangeAnimationProgressBar() => PaneStackPanel.FindName("OrangeAnimationProgressBar") as ProgressBar;
 
+        public static void UpdateGameModLibraryPath(string gameTag, string newPath)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(gameTag) && !string.IsNullOrEmpty(newPath))
+                {
+                    var relativePath = Path.GetRelativePath(AppContext.BaseDirectory, newPath);
+                    SettingsManager.Current.GameModLibraryPaths[gameTag] = relativePath;
+                    SettingsManager.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to update game ModLibrary path: {ex.Message}");
+            }
+        }
+
+        public static void UpdateGameXXMIPath(string gameTag, string newPath)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(gameTag) && !string.IsNullOrEmpty(newPath))
+                {
+                    var relativePath = Path.GetRelativePath(AppContext.BaseDirectory, newPath);
+                    SettingsManager.Current.GameXXMIModsPaths[gameTag] = relativePath;
+                    SettingsManager.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to update game XXMI path: {ex.Message}");
+            }
+        }
+
+        private void UpdateNavigationMenuForSelectedGame()
+        {
+            try
+            {
+                var selectedItem = GameSelectorComboBox.SelectedItem as ComboBoxItem;
+                var selectedGame = selectedItem?.Tag?.ToString() ?? "";
+
+                // Always update SettingsPage selector bar first if it's currently displayed
+                if (contentFrame.Content is Mod_Manager_X.Pages.SettingsPage settingsPage)
+                {
+                    settingsPage.UpdateSelectorBarForSelectedGame(selectedGame);
+                }
+
+                // Update ModGridPage if it's currently displayed
+                if (contentFrame.Content is Mod_Manager_X.Pages.ModGridPage modGridPage)
+                {
+                    if (!string.IsNullOrEmpty(selectedGame))
+                    {
+                        // Refresh the mod grid for the new game
+                        modGridPage.RefreshForGame(selectedGame);
+                    }
+                    else
+                    {
+                        // No game selected, navigate to settings
+                        contentFrame.Navigate(typeof(Mod_Manager_X.Pages.SettingsPage));
+                        nvSample.SelectedItem = SettingsPageItem;
+                    }
+                }
+                else if (string.IsNullOrEmpty(selectedGame))
+                {
+                    // No game selected - navigate to settings to show all games
+                    if (contentFrame.Content?.GetType() != typeof(Mod_Manager_X.Pages.SettingsPage))
+                    {
+                        contentFrame.Navigate(typeof(Mod_Manager_X.Pages.SettingsPage));
+                        nvSample.SelectedItem = SettingsPageItem;
+                    }
+                }
+                else
+                {
+                    // Game selected - navigate to mod page if not already on SettingsPage
+                    if (contentFrame.Content?.GetType() != typeof(Mod_Manager_X.Pages.SettingsPage))
+                    {
+                        contentFrame.Navigate(typeof(Mod_Manager_X.Pages.ModGridPage), selectedGame, new Microsoft.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
+                        nvSample.SelectedItem = null; // Deselect navigation items since we're showing game-specific content
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to update navigation menu: {ex.Message}");
+            }
+        }
+
+
+
+        private void GameSelectorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SaveGameSelectorSettings();
+            UpdateModLibraryPath();
+            UpdateNavigationMenuForSelectedGame();
+        }
+
+        private void UpdateModLibraryPath()
+        {
+            try
+            {
+                var selectedItem = GameSelectorComboBox.SelectedItem as ComboBoxItem;
+                var selectedGame = selectedItem?.Tag?.ToString() ?? "";
+                
+                if (string.IsNullOrEmpty(selectedGame))
+                {
+                    // No game selected, use defaults for Zenless Zone Zero
+                    var defaultModLibraryPath = AppConstants.DEFAULT_MOD_LIBRARY_PATH;
+                    var defaultXXMIPath = AppConstants.DEFAULT_XXMI_MODS_PATH;
+                    
+                    if (SettingsManager.Current.ModLibraryDirectory != defaultModLibraryPath)
+                    {
+                        SettingsManager.Current.ModLibraryDirectory = defaultModLibraryPath;
+                        SettingsManager.Save();
+                    }
+                    if (SettingsManager.Current.XXMIModsDirectory != defaultXXMIPath)
+                    {
+                        SettingsManager.Current.XXMIModsDirectory = defaultXXMIPath;
+                        SettingsManager.Save();
+                    }
+                    return;
+                }
+                
+                // Update ModLibrary path
+                string newModLibraryPath;
+                if (SettingsManager.Current.GameModLibraryPaths.TryGetValue(selectedGame, out var savedModLibraryPath))
+                {
+                    newModLibraryPath = Path.IsPathRooted(savedModLibraryPath) ? savedModLibraryPath : Path.Combine(AppContext.BaseDirectory, savedModLibraryPath.TrimStart('.', '\\', '/'));
+                }
+                else
+                {
+                    // Set default ModLibrary path for new games
+                    switch (selectedGame)
+                    {
+                        case "ZenlessZoneZero":
+                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "ZZ");
+                            break;
+                        case "GenshinImpact":
+                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "GI");
+                            break;
+                        case "HonkaiImpact3rd":
+                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "HI");
+                            break;
+                        case "HonkaiStarRail":
+                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "SR");
+                            break;
+                        case "WutheringWaves":
+                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "WW");
+                            break;
+                        default:
+                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "ZZ");
+                            break;
+                    }
+                    
+                    // Save the default ModLibrary path for this game
+                    SettingsManager.Current.GameModLibraryPaths[selectedGame] = Path.GetRelativePath(AppContext.BaseDirectory, newModLibraryPath);
+                }
+                
+                // Update XXMI Mods path
+                string newXXMIPath;
+                if (SettingsManager.Current.GameXXMIModsPaths.TryGetValue(selectedGame, out var savedXXMIPath))
+                {
+                    newXXMIPath = Path.IsPathRooted(savedXXMIPath) ? savedXXMIPath : Path.Combine(AppContext.BaseDirectory, savedXXMIPath.TrimStart('.', '\\', '/'));
+                }
+                else
+                {
+                    // Set default XXMI path for new games
+                    switch (selectedGame)
+                    {
+                        case "ZenlessZoneZero":
+                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "ZZMI", "Mods");
+                            break;
+                        case "GenshinImpact":
+                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "GIMI", "Mods");
+                            break;
+                        case "HonkaiImpact3rd":
+                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "HIMI", "Mods");
+                            break;
+                        case "HonkaiStarRail":
+                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "SRMI", "Mods");
+                            break;
+                        case "WutheringWaves":
+                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "WWMI", "Mods");
+                            break;
+                        default:
+                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "ZZMI", "Mods");
+                            break;
+                    }
+                    
+                    // Save the default XXMI path for this game
+                    SettingsManager.Current.GameXXMIModsPaths[selectedGame] = Path.GetRelativePath(AppContext.BaseDirectory, newXXMIPath);
+                }
+                
+                // Update current paths if they have changed
+                bool pathsChanged = false;
+                
+                if (SettingsManager.Current.ModLibraryDirectory != newModLibraryPath)
+                {
+                    SettingsManager.Current.ModLibraryDirectory = newModLibraryPath;
+                    pathsChanged = true;
+                    
+                    // Create the directory if it doesn't exist
+                    if (!Directory.Exists(newModLibraryPath))
+                        Directory.CreateDirectory(newModLibraryPath);
+                }
+                
+                if (SettingsManager.Current.XXMIModsDirectory != newXXMIPath)
+                {
+                    SettingsManager.Current.XXMIModsDirectory = newXXMIPath;
+                    pathsChanged = true;
+                    
+                    // Create the directory if it doesn't exist
+                    if (!Directory.Exists(newXXMIPath))
+                        Directory.CreateDirectory(newXXMIPath);
+                }
+                
+                if (pathsChanged)
+                {
+                    SettingsManager.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to update game paths: {ex.Message}");
+            }
+        }
+
+        private void LoadGameSelectorSettings()
+        {
+            try
+            {
+                var settingsPath = Path.Combine(AppContext.BaseDirectory, "Settings", "GameSelector.json");
+                if (File.Exists(settingsPath))
+                {
+                    var json = File.ReadAllText(settingsPath);
+                    var settings = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+                    if (settings != null && settings.TryGetValue("SelectedGame", out var selectedGame) && selectedGame is JsonElement gameElement)
+                    {
+                        var gameTag = gameElement.GetString();
+                        if (!string.IsNullOrEmpty(gameTag))
+                        {
+                            // Find and select the matching ComboBoxItem
+                            foreach (ComboBoxItem item in GameSelectorComboBox.Items)
+                            {
+                                if (item.Tag?.ToString() == gameTag)
+                                {
+                                    GameSelectorComboBox.SelectedItem = item;
+                                    UpdateModLibraryPath(); // Update path when loading saved selection
+                                    UpdateNavigationMenuForSelectedGame(); // Update navigation menu
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                // If no settings file or no valid selection, leave ComboBox with no selection (default)
+            }
+            catch
+            {
+                // On error, leave ComboBox with no selection (default)
+            }
+        }
+
+        private void SaveGameSelectorSettings()
+        {
+            try
+            {
+                var selectedItem = GameSelectorComboBox.SelectedItem as ComboBoxItem;
+                var selectedGame = selectedItem?.Tag?.ToString() ?? "";
+                
+                var settings = new
+                {
+                    SelectedGame = selectedGame
+                };
+                
+                var settingsDir = Path.Combine(AppContext.BaseDirectory, "Settings");
+                if (!Directory.Exists(settingsDir))
+                    Directory.CreateDirectory(settingsDir);
+                
+                var settingsPath = Path.Combine(settingsDir, "GameSelector.json");
+                var json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(settingsPath, json);
+            }
+            catch { }
+        }
 
     }
 }

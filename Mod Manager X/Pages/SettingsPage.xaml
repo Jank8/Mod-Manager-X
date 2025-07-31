@@ -110,38 +110,98 @@
                 
                 <!-- Genshin Impact Settings Content -->
                 <StackPanel x:Name="GenshinImpactSettingsPanel" Spacing="15" Visibility="Collapsed">
-                    <TextBlock Text="Genshin Impact settings will be added here." 
-                               FontStyle="Italic" 
-                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" 
-                               HorizontalAlignment="Center" 
-                               Margin="0,40,0,0"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="GIXXMIModsDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                        <BreadcrumbBar x:Name="GIXXMIModsDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
+                        <Button x:Name="GIXXMIModsDirectoryPickButton" Click="GIXXMIModsDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
+                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
+                        </Button>
+                        <Button x:Name="GIXXMIModsDirectoryDefaultButton" Click="GIXXMIModsDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
+                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="GIModLibraryDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                        <BreadcrumbBar x:Name="GIModLibraryDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
+                        <Button x:Name="GIModLibraryDirectoryPickButton" Click="GIModLibraryDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
+                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
+                        </Button>
+                        <Button x:Name="GIModLibraryDirectoryDefaultButton" Click="GIModLibraryDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
+                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
                 
                 <!-- Honkai Impact 3rd Settings Content -->
                 <StackPanel x:Name="HonkaiImpact3rdSettingsPanel" Spacing="15" Visibility="Collapsed">
-                    <TextBlock Text="Honkai Impact 3rd settings will be added here." 
-                               FontStyle="Italic" 
-                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" 
-                               HorizontalAlignment="Center" 
-                               Margin="0,40,0,0"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="HIXXMIModsDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                        <BreadcrumbBar x:Name="HIXXMIModsDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
+                        <Button x:Name="HIXXMIModsDirectoryPickButton" Click="HIXXMIModsDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
+                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
+                        </Button>
+                        <Button x:Name="HIXXMIModsDirectoryDefaultButton" Click="HIXXMIModsDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
+                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="HIModLibraryDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                        <BreadcrumbBar x:Name="HIModLibraryDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
+                        <Button x:Name="HIModLibraryDirectoryPickButton" Click="HIModLibraryDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
+                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
+                        </Button>
+                        <Button x:Name="HIModLibraryDirectoryDefaultButton" Click="HIModLibraryDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
+                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
                 
                 <!-- Honkai Star Rail Settings Content -->
                 <StackPanel x:Name="HonkaiStarRailSettingsPanel" Spacing="15" Visibility="Collapsed">
-                    <TextBlock Text="Honkai Star Rail settings will be added here." 
-                               FontStyle="Italic" 
-                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" 
-                               HorizontalAlignment="Center" 
-                               Margin="0,40,0,0"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="SRXXMIModsDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                        <BreadcrumbBar x:Name="SRXXMIModsDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
+                        <Button x:Name="SRXXMIModsDirectoryPickButton" Click="SRXXMIModsDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
+                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
+                        </Button>
+                        <Button x:Name="SRXXMIModsDirectoryDefaultButton" Click="SRXXMIModsDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
+                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="SRModLibraryDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                        <BreadcrumbBar x:Name="SRModLibraryDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
+                        <Button x:Name="SRModLibraryDirectoryPickButton" Click="SRModLibraryDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
+                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
+                        </Button>
+                        <Button x:Name="SRModLibraryDirectoryDefaultButton" Click="SRModLibraryDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
+                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
                 
                 <!-- Wuthering Waves Settings Content -->
                 <StackPanel x:Name="WutheringWavesSettingsPanel" Spacing="15" Visibility="Collapsed">
-                    <TextBlock Text="Wuthering Waves settings will be added here." 
-                               FontStyle="Italic" 
-                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" 
-                               HorizontalAlignment="Center" 
-                               Margin="0,40,0,0"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="WWXXMIModsDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                        <BreadcrumbBar x:Name="WWXXMIModsDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
+                        <Button x:Name="WWXXMIModsDirectoryPickButton" Click="WWXXMIModsDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
+                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
+                        </Button>
+                        <Button x:Name="WWXXMIModsDirectoryDefaultButton" Click="WWXXMIModsDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
+                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock x:Name="WWModLibraryDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                        <BreadcrumbBar x:Name="WWModLibraryDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
+                        <Button x:Name="WWModLibraryDirectoryPickButton" Click="WWModLibraryDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
+                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
+                        </Button>
+                        <Button x:Name="WWModLibraryDirectoryDefaultButton" Click="WWModLibraryDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
+                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
                 
                 <!-- Zenless Zone Zero Settings Content -->
