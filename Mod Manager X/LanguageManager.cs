@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Linq;
 
-namespace Mod_Manager_X
+namespace ZZZ_Mod_Manager_X
 {
     public class LanguageManager
     {

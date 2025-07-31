@@ -6,7 +6,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using WinRT.Interop;
 
-namespace Mod_Manager_X
+namespace ZZZ_Mod_Manager_X
 {
     public sealed partial class LoadingWindow : Window
     {
@@ -15,7 +15,7 @@ namespace Mod_Manager_X
             this.InitializeComponent();
             
             // Set window properties
-            this.Title = "Mod Manager X - Loading";
+            this.Title = "ZZZ Mod Manager X - Loading";
             
             // Configure window
             var hwnd = WindowNative.GetWindowHandle(this);

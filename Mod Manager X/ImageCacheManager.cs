@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Mod_Manager_X
+namespace ZZZ_Mod_Manager_X
 {
     /// <summary>
     /// Thread-safe image cache manager with size limits to prevent memory leaks

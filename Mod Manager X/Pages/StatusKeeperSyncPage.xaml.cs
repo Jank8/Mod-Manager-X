@@ -15,7 +15,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage;
 using System.Text;
 
-namespace Mod_Manager_X.Pages
+namespace ZZZ_Mod_Manager_X.Pages
 {
     public sealed partial class StatusKeeperSyncPage : Page
     {
@@ -45,7 +45,7 @@ namespace Mod_Manager_X.Pages
         {
             try
             {
-                var langFile = Mod_Manager_X.SettingsManager.Current?.LanguageFile ?? "en.json";
+                var langFile = ZZZ_Mod_Manager_X.SettingsManager.Current?.LanguageFile ?? "en.json";
                 var langPath = Path.Combine(System.AppContext.BaseDirectory, "Language", "StatusKeeper", langFile);
                 if (!File.Exists(langPath))
                     langPath = Path.Combine(System.AppContext.BaseDirectory, "Language", "StatusKeeper", "en.json");
@@ -71,7 +71,7 @@ namespace Mod_Manager_X.Pages
         public static string TStatic(string key)
         {
             // Load language dictionary if not already loaded
-            var langFile = Mod_Manager_X.SettingsManager.Current?.LanguageFile ?? "en.json";
+            var langFile = ZZZ_Mod_Manager_X.SettingsManager.Current?.LanguageFile ?? "en.json";
             var langPath = Path.Combine(System.AppContext.BaseDirectory, "Language", "StatusKeeper", langFile);
             if (!File.Exists(langPath))
                 langPath = Path.Combine(System.AppContext.BaseDirectory, "Language", "StatusKeeper", "en.json");
@@ -516,9 +516,9 @@ namespace Mod_Manager_X.Pages
             }
 
             // Try to find d3dx_user.ini automatically
-            var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
+            var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
                                 Path.Combine(AppContext.BaseDirectory, "ModLibrary");
-            var xxmiModsPath = Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory ?? 
+            var xxmiModsPath = ZZZ_Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory ?? 
                               Path.Combine(AppContext.BaseDirectory, "XXMI", "ZZMI", "Mods");
 
             var tryPaths = new string[]
@@ -663,7 +663,7 @@ namespace Mod_Manager_X.Pages
             
             try
             {
-                var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
+                var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
                                    Path.Combine(AppContext.BaseDirectory, "ModLibrary");
                 
                 if (!Directory.Exists(modLibraryPath))
@@ -747,7 +747,7 @@ namespace Mod_Manager_X.Pages
         {
             try
             {
-                var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
+                var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
                                    Path.Combine(AppContext.BaseDirectory, "ModLibrary");
                 
                 // For new format (namespace), path is already relative from ModLibrary: "ModFolder/KeySwaps.ini"

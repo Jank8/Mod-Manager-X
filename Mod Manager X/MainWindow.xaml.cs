@@ -19,7 +19,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Media.Animation;
 
-namespace Mod_Manager_X
+namespace ZZZ_Mod_Manager_X
 {
     public sealed partial class MainWindow : Window
     {
@@ -36,12 +36,6 @@ namespace Mod_Manager_X
         public MainWindow()
         {
             InitializeComponent();
-
-            // Load game selector settings
-            LoadGameSelectorSettings();
-            
-            // Initialize navigation menu based on selected game
-            UpdateNavigationMenuForSelectedGame();
 
             // Set AllModsButton translation
             AllModsButton.Content = LanguageManager.Instance.T("All_Mods");
@@ -60,7 +54,7 @@ namespace Mod_Manager_X
 
 
             // Force theme on startup according to user settings
-            var theme = Mod_Manager_X.SettingsManager.Current.Theme;
+            var theme = ZZZ_Mod_Manager_X.SettingsManager.Current.Theme;
             if (this.Content is FrameworkElement root)
             {
                 if (theme == "Light")
@@ -101,7 +95,7 @@ namespace Mod_Manager_X
                 var progressBar = GetOrangeAnimationProgressBar();
                 if (progressBar != null)
                 {
-                    progressBar.Opacity = Mod_Manager_X.SettingsManager.Current.ShowOrangeAnimation ? 1 : 0;
+                    progressBar.Opacity = ZZZ_Mod_Manager_X.SettingsManager.Current.ShowOrangeAnimation ? 1 : 0;
                 }
             };
             MainRoot.Loaded += MainRoot_Loaded;
@@ -113,7 +107,7 @@ namespace Mod_Manager_X
             UpdateAllModsButtonState();
 
             // Set main page to All Mods
-            contentFrame.Navigate(typeof(Mod_Manager_X.Pages.ModGridPage), null);
+            contentFrame.Navigate(typeof(ZZZ_Mod_Manager_X.Pages.ModGridPage), null);
 
             appWindow.Resize(new Windows.Graphics.SizeInt32(1650, 820));
             appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
@@ -135,7 +129,7 @@ namespace Mod_Manager_X
             var progressBar = GetOrangeAnimationProgressBar();
             if (progressBar != null)
             {
-                progressBar.Opacity = Mod_Manager_X.SettingsManager.Current.ShowOrangeAnimation ? 1 : 0;
+                progressBar.Opacity = ZZZ_Mod_Manager_X.SettingsManager.Current.ShowOrangeAnimation ? 1 : 0;
             }
         }
 
@@ -151,7 +145,7 @@ namespace Mod_Manager_X
         private string GetXXMILauncherPath()
         {
             // Try to derive launcher path from XXMI Mods Directory setting
-            var xxmiModsDir = Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory;
+            var xxmiModsDir = ZZZ_Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory;
             
             if (!string.IsNullOrEmpty(xxmiModsDir))
             {
@@ -300,7 +294,7 @@ namespace Mod_Manager_X
             var heartFull = ShowActiveModsButton.FindName("HeartFullIcon") as FontIcon;
             var heartHover = ShowActiveModsButton.FindName("HeartHoverIcon") as FontIcon;
             bool isActivePage = false;
-            if (contentFrame.Content is Mod_Manager_X.Pages.ModGridPage modGridPage)
+            if (contentFrame.Content is ZZZ_Mod_Manager_X.Pages.ModGridPage modGridPage)
             {
                 isActivePage = modGridPage.GetCategoryTitleText() == LanguageManager.Instance.T("Category_Active_Mods");
             }
@@ -334,23 +328,23 @@ namespace Mod_Manager_X
                     if (selectedTag.StartsWith("Character_"))
                     {
                         var character = selectedTag.Substring("Character_".Length);
-                        contentFrame.Navigate(typeof(Mod_Manager_X.Pages.ModGridPage), character, new DrillInNavigationTransitionInfo());
+                        contentFrame.Navigate(typeof(ZZZ_Mod_Manager_X.Pages.ModGridPage), character, new DrillInNavigationTransitionInfo());
                     }
                     else if (selectedTag == "OtherModsPage")
                     {
-                        contentFrame.Navigate(typeof(Mod_Manager_X.Pages.ModGridPage), "Other", new DrillInNavigationTransitionInfo());
+                        contentFrame.Navigate(typeof(ZZZ_Mod_Manager_X.Pages.ModGridPage), "Other", new DrillInNavigationTransitionInfo());
                     }
                     else if (selectedTag == "FunctionsPage")
                     {
-                        contentFrame.Navigate(typeof(Mod_Manager_X.Pages.FunctionsPage), null, new DrillInNavigationTransitionInfo());
+                        contentFrame.Navigate(typeof(ZZZ_Mod_Manager_X.Pages.FunctionsPage), null, new DrillInNavigationTransitionInfo());
                     }
                     else if (selectedTag == "SettingsPage")
                     {
-                        contentFrame.Navigate(typeof(Mod_Manager_X.Pages.SettingsPage), null, new DrillInNavigationTransitionInfo());
+                        contentFrame.Navigate(typeof(ZZZ_Mod_Manager_X.Pages.SettingsPage), null, new DrillInNavigationTransitionInfo());
                     }
                     else
                     {
-                        var pageType = Type.GetType($"Mod_Manager_X.Pages.{selectedTag}");
+                        var pageType = Type.GetType($"ZZZ_Mod_Manager_X.Pages.{selectedTag}");
                         if (pageType != null)
                         {
                             contentFrame.Navigate(pageType, null, new DrillInNavigationTransitionInfo());
@@ -398,18 +392,18 @@ namespace Mod_Manager_X
                 }
             }
             // Dynamic mod filtering only if enabled in settings and query has at least 3 characters
-            if (Mod_Manager_X.SettingsManager.Current.DynamicModSearchEnabled)
+            if (ZZZ_Mod_Manager_X.SettingsManager.Current.DynamicModSearchEnabled)
             {
                 if (!string.IsNullOrEmpty(query) && query.Length >= 3)
                 {
                     // Always navigate with slide animation when starting search
                     contentFrame.Navigate(
-                        typeof(Mod_Manager_X.Pages.ModGridPage),
+                        typeof(ZZZ_Mod_Manager_X.Pages.ModGridPage),
                         null,
                         new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight });
                     
                     // Apply filter after navigation
-                    if (contentFrame.Content is Mod_Manager_X.Pages.ModGridPage modGridPage)
+                    if (contentFrame.Content is ZZZ_Mod_Manager_X.Pages.ModGridPage modGridPage)
                     {
                         modGridPage.FilterMods(query);
                     }
@@ -417,7 +411,7 @@ namespace Mod_Manager_X
                 else if (string.IsNullOrEmpty(query))
                 {
                     // Clear search - only filter if we're already on ModGridPage
-                    if (contentFrame.Content is Mod_Manager_X.Pages.ModGridPage modGridPage)
+                    if (contentFrame.Content is ZZZ_Mod_Manager_X.Pages.ModGridPage modGridPage)
                     {
                         modGridPage.FilterMods(query);
                     }
@@ -434,12 +428,12 @@ namespace Mod_Manager_X
             {
                 // Always navigate with slide animation when starting search
                 contentFrame.Navigate(
-                    typeof(Mod_Manager_X.Pages.ModGridPage),
+                    typeof(ZZZ_Mod_Manager_X.Pages.ModGridPage),
                     null,
                     new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight });
                 
                 // Apply filter after navigation
-                if (contentFrame.Content is Mod_Manager_X.Pages.ModGridPage modGridPage)
+                if (contentFrame.Content is ZZZ_Mod_Manager_X.Pages.ModGridPage modGridPage)
                 {
                     modGridPage.FilterMods(query);
                 }
@@ -447,7 +441,7 @@ namespace Mod_Manager_X
             else if (string.IsNullOrEmpty(query))
             {
                 // Clear search - only if we're already on ModGridPage
-                if (contentFrame.Content is Mod_Manager_X.Pages.ModGridPage modGridPage)
+                if (contentFrame.Content is ZZZ_Mod_Manager_X.Pages.ModGridPage modGridPage)
                 {
                     modGridPage.FilterMods(query);
                 }
@@ -514,7 +508,7 @@ namespace Mod_Manager_X
                     // Clear JSON cache first to ensure fresh data loading
                     loadingWindow.UpdateStatus("Clearing JSON cache...");
                     LogToGridLog("REFRESH: Clearing JSON cache");
-                    Mod_Manager_X.Pages.ModGridPage.ClearJsonCache();
+                    ZZZ_Mod_Manager_X.Pages.ModGridPage.ClearJsonCache();
                     LogToGridLog("REFRESH: JSON cache cleared");
                     await Task.Delay(100);
                     
@@ -546,7 +540,7 @@ namespace Mod_Manager_X
                 _ = GenerateModCharacterMenuAsync();
                 
                 // Recreate symlinks to ensure they match current active mods state
-                Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
+                ZZZ_Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
                 Logger.LogInfo("Symlinks recreated during manager reload");
                 
                 // Update All Mods button state after reload
@@ -555,7 +549,7 @@ namespace Mod_Manager_X
                 nvSample.SelectedItem = null; // Unselect active button
                 
                 // Navigate to All Mods
-                contentFrame.Navigate(typeof(Mod_Manager_X.Pages.ModGridPage), null, new DrillInNavigationTransitionInfo());
+                contentFrame.Navigate(typeof(ZZZ_Mod_Manager_X.Pages.ModGridPage), null, new DrillInNavigationTransitionInfo());
                 
                 UpdateShowActiveModsButtonIcon();
                 loadingWindow.Close();
@@ -567,7 +561,7 @@ namespace Mod_Manager_X
             // Unselect selected menu item
             nvSample.SelectedItem = null;
             // Navigate to ModGridPage without parameter to show all mods
-            contentFrame.Navigate(typeof(Mod_Manager_X.Pages.ModGridPage), null, new DrillInNavigationTransitionInfo());
+            contentFrame.Navigate(typeof(ZZZ_Mod_Manager_X.Pages.ModGridPage), null, new DrillInNavigationTransitionInfo());
             // Update heart button after a short delay to ensure page has loaded
             DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () => UpdateShowActiveModsButtonIcon());
         }
@@ -596,13 +590,13 @@ namespace Mod_Manager_X
         private void ShowActiveModsButton_Click(object sender, RoutedEventArgs e)
         {
             nvSample.SelectedItem = null; // Unselect active button in menu
-            contentFrame.Navigate(typeof(Mod_Manager_X.Pages.ModGridPage), "Active", new DrillInNavigationTransitionInfo());
+            contentFrame.Navigate(typeof(ZZZ_Mod_Manager_X.Pages.ModGridPage), "Active", new DrillInNavigationTransitionInfo());
             UpdateShowActiveModsButtonIcon();
         }
 
         public async Task GenerateModCharacterMenuAsync()
         {
-            string modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? System.IO.Path.Combine(System.AppContext.BaseDirectory, "ModLibrary");
+            string modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? System.IO.Path.Combine(System.AppContext.BaseDirectory, "ModLibrary");
             if (!System.IO.Directory.Exists(modLibraryPath)) return;
             var characterSet = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
             var modFolders = System.IO.Directory.GetDirectories(modLibraryPath);
@@ -745,16 +739,16 @@ namespace Mod_Manager_X
             UpdateAllModsButtonState();
             _ = GenerateModCharacterMenuAsync();
             // Refresh page if it's ModGridPage or PresetsPage
-            if (contentFrame.Content is Mod_Manager_X.Pages.ModGridPage modGridPage)
+            if (contentFrame.Content is ZZZ_Mod_Manager_X.Pages.ModGridPage modGridPage)
             {
                 modGridPage.RefreshUIAfterLanguageChange();
             }
-            else if (contentFrame.Content is Mod_Manager_X.Pages.PresetsPage presetsPage)
+            else if (contentFrame.Content is ZZZ_Mod_Manager_X.Pages.PresetsPage presetsPage)
             {
                 var updateTexts = presetsPage.GetType().GetMethod("UpdateTexts", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 updateTexts?.Invoke(presetsPage, null);
             }
-            else if (contentFrame.Content is Mod_Manager_X.Pages.SettingsPage settingsPage)
+            else if (contentFrame.Content is ZZZ_Mod_Manager_X.Pages.SettingsPage settingsPage)
             {
                 var updateTexts = settingsPage.GetType().GetMethod("UpdateTexts", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 updateTexts?.Invoke(settingsPage, null);
@@ -916,290 +910,6 @@ namespace Mod_Manager_X
         public Frame? GetContentFrame() => contentFrame;
         public ProgressBar? GetOrangeAnimationProgressBar() => PaneStackPanel.FindName("OrangeAnimationProgressBar") as ProgressBar;
 
-        public static void UpdateGameModLibraryPath(string gameTag, string newPath)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(gameTag) && !string.IsNullOrEmpty(newPath))
-                {
-                    var relativePath = Path.GetRelativePath(AppContext.BaseDirectory, newPath);
-                    SettingsManager.Current.GameModLibraryPaths[gameTag] = relativePath;
-                    SettingsManager.Save();
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to update game ModLibrary path: {ex.Message}");
-            }
-        }
-
-        public static void UpdateGameXXMIPath(string gameTag, string newPath)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(gameTag) && !string.IsNullOrEmpty(newPath))
-                {
-                    var relativePath = Path.GetRelativePath(AppContext.BaseDirectory, newPath);
-                    SettingsManager.Current.GameXXMIModsPaths[gameTag] = relativePath;
-                    SettingsManager.Save();
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to update game XXMI path: {ex.Message}");
-            }
-        }
-
-        private void UpdateNavigationMenuForSelectedGame()
-        {
-            try
-            {
-                var selectedItem = GameSelectorComboBox.SelectedItem as ComboBoxItem;
-                var selectedGame = selectedItem?.Tag?.ToString() ?? "";
-
-                // Always update SettingsPage selector bar first if it's currently displayed
-                if (contentFrame.Content is Mod_Manager_X.Pages.SettingsPage settingsPage)
-                {
-                    settingsPage.UpdateSelectorBarForSelectedGame(selectedGame);
-                }
-
-                // Update ModGridPage if it's currently displayed
-                if (contentFrame.Content is Mod_Manager_X.Pages.ModGridPage modGridPage)
-                {
-                    if (!string.IsNullOrEmpty(selectedGame))
-                    {
-                        // Refresh the mod grid for the new game
-                        modGridPage.RefreshForGame(selectedGame);
-                    }
-                    else
-                    {
-                        // No game selected, navigate to settings
-                        contentFrame.Navigate(typeof(Mod_Manager_X.Pages.SettingsPage));
-                        nvSample.SelectedItem = SettingsPageItem;
-                    }
-                }
-                else if (string.IsNullOrEmpty(selectedGame))
-                {
-                    // No game selected - navigate to settings to show all games
-                    if (contentFrame.Content?.GetType() != typeof(Mod_Manager_X.Pages.SettingsPage))
-                    {
-                        contentFrame.Navigate(typeof(Mod_Manager_X.Pages.SettingsPage));
-                        nvSample.SelectedItem = SettingsPageItem;
-                    }
-                }
-                else
-                {
-                    // Game selected - navigate to mod page if not already on SettingsPage
-                    if (contentFrame.Content?.GetType() != typeof(Mod_Manager_X.Pages.SettingsPage))
-                    {
-                        contentFrame.Navigate(typeof(Mod_Manager_X.Pages.ModGridPage), selectedGame, new Microsoft.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo());
-                        nvSample.SelectedItem = null; // Deselect navigation items since we're showing game-specific content
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to update navigation menu: {ex.Message}");
-            }
-        }
-
-
-
-        private void GameSelectorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SaveGameSelectorSettings();
-            UpdateModLibraryPath();
-            UpdateNavigationMenuForSelectedGame();
-        }
-
-        private void UpdateModLibraryPath()
-        {
-            try
-            {
-                var selectedItem = GameSelectorComboBox.SelectedItem as ComboBoxItem;
-                var selectedGame = selectedItem?.Tag?.ToString() ?? "";
-                
-                if (string.IsNullOrEmpty(selectedGame))
-                {
-                    // No game selected, use defaults for Zenless Zone Zero
-                    var defaultModLibraryPath = AppConstants.DEFAULT_MOD_LIBRARY_PATH;
-                    var defaultXXMIPath = AppConstants.DEFAULT_XXMI_MODS_PATH;
-                    
-                    if (SettingsManager.Current.ModLibraryDirectory != defaultModLibraryPath)
-                    {
-                        SettingsManager.Current.ModLibraryDirectory = defaultModLibraryPath;
-                        SettingsManager.Save();
-                    }
-                    if (SettingsManager.Current.XXMIModsDirectory != defaultXXMIPath)
-                    {
-                        SettingsManager.Current.XXMIModsDirectory = defaultXXMIPath;
-                        SettingsManager.Save();
-                    }
-                    return;
-                }
-                
-                // Update ModLibrary path
-                string newModLibraryPath;
-                if (SettingsManager.Current.GameModLibraryPaths.TryGetValue(selectedGame, out var savedModLibraryPath))
-                {
-                    newModLibraryPath = Path.IsPathRooted(savedModLibraryPath) ? savedModLibraryPath : Path.Combine(AppContext.BaseDirectory, savedModLibraryPath.TrimStart('.', '\\', '/'));
-                }
-                else
-                {
-                    // Set default ModLibrary path for new games
-                    switch (selectedGame)
-                    {
-                        case "ZenlessZoneZero":
-                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "ZZ");
-                            break;
-                        case "GenshinImpact":
-                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "GI");
-                            break;
-                        case "HonkaiImpact3rd":
-                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "HI");
-                            break;
-                        case "HonkaiStarRail":
-                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "SR");
-                            break;
-                        case "WutheringWaves":
-                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "WW");
-                            break;
-                        default:
-                            newModLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary", "ZZ");
-                            break;
-                    }
-                    
-                    // Save the default ModLibrary path for this game
-                    SettingsManager.Current.GameModLibraryPaths[selectedGame] = Path.GetRelativePath(AppContext.BaseDirectory, newModLibraryPath);
-                }
-                
-                // Update XXMI Mods path
-                string newXXMIPath;
-                if (SettingsManager.Current.GameXXMIModsPaths.TryGetValue(selectedGame, out var savedXXMIPath))
-                {
-                    newXXMIPath = Path.IsPathRooted(savedXXMIPath) ? savedXXMIPath : Path.Combine(AppContext.BaseDirectory, savedXXMIPath.TrimStart('.', '\\', '/'));
-                }
-                else
-                {
-                    // Set default XXMI path for new games
-                    switch (selectedGame)
-                    {
-                        case "ZenlessZoneZero":
-                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "ZZMI", "Mods");
-                            break;
-                        case "GenshinImpact":
-                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "GIMI", "Mods");
-                            break;
-                        case "HonkaiImpact3rd":
-                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "HIMI", "Mods");
-                            break;
-                        case "HonkaiStarRail":
-                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "SRMI", "Mods");
-                            break;
-                        case "WutheringWaves":
-                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "WWMI", "Mods");
-                            break;
-                        default:
-                            newXXMIPath = Path.Combine(AppContext.BaseDirectory, "XXMI", "ZZMI", "Mods");
-                            break;
-                    }
-                    
-                    // Save the default XXMI path for this game
-                    SettingsManager.Current.GameXXMIModsPaths[selectedGame] = Path.GetRelativePath(AppContext.BaseDirectory, newXXMIPath);
-                }
-                
-                // Update current paths if they have changed
-                bool pathsChanged = false;
-                
-                if (SettingsManager.Current.ModLibraryDirectory != newModLibraryPath)
-                {
-                    SettingsManager.Current.ModLibraryDirectory = newModLibraryPath;
-                    pathsChanged = true;
-                    
-                    // Create the directory if it doesn't exist
-                    if (!Directory.Exists(newModLibraryPath))
-                        Directory.CreateDirectory(newModLibraryPath);
-                }
-                
-                if (SettingsManager.Current.XXMIModsDirectory != newXXMIPath)
-                {
-                    SettingsManager.Current.XXMIModsDirectory = newXXMIPath;
-                    pathsChanged = true;
-                    
-                    // Create the directory if it doesn't exist
-                    if (!Directory.Exists(newXXMIPath))
-                        Directory.CreateDirectory(newXXMIPath);
-                }
-                
-                if (pathsChanged)
-                {
-                    SettingsManager.Save();
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to update game paths: {ex.Message}");
-            }
-        }
-
-        private void LoadGameSelectorSettings()
-        {
-            try
-            {
-                var settingsPath = Path.Combine(AppContext.BaseDirectory, "Settings", "GameSelector.json");
-                if (File.Exists(settingsPath))
-                {
-                    var json = File.ReadAllText(settingsPath);
-                    var settings = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
-                    if (settings != null && settings.TryGetValue("SelectedGame", out var selectedGame) && selectedGame is JsonElement gameElement)
-                    {
-                        var gameTag = gameElement.GetString();
-                        if (!string.IsNullOrEmpty(gameTag))
-                        {
-                            // Find and select the matching ComboBoxItem
-                            foreach (ComboBoxItem item in GameSelectorComboBox.Items)
-                            {
-                                if (item.Tag?.ToString() == gameTag)
-                                {
-                                    GameSelectorComboBox.SelectedItem = item;
-                                    UpdateModLibraryPath(); // Update path when loading saved selection
-                                    UpdateNavigationMenuForSelectedGame(); // Update navigation menu
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                // If no settings file or no valid selection, leave ComboBox with no selection (default)
-            }
-            catch
-            {
-                // On error, leave ComboBox with no selection (default)
-            }
-        }
-
-        private void SaveGameSelectorSettings()
-        {
-            try
-            {
-                var selectedItem = GameSelectorComboBox.SelectedItem as ComboBoxItem;
-                var selectedGame = selectedItem?.Tag?.ToString() ?? "";
-                
-                var settings = new
-                {
-                    SelectedGame = selectedGame
-                };
-                
-                var settingsDir = Path.Combine(AppContext.BaseDirectory, "Settings");
-                if (!Directory.Exists(settingsDir))
-                    Directory.CreateDirectory(settingsDir);
-                
-                var settingsPath = Path.Combine(settingsDir, "GameSelector.json");
-                var json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(settingsPath, json);
-            }
-            catch { }
-        }
 
     }
 }

@@ -1,382 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="Mod_Manager_X.Pages.FunctionsPage"
+    x:Class="ZZZ_Mod_Manager_X.Pages.FunctionsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Mod_Manager_X.Pages">
-    <Grid Padding="24,24,0,24">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        <!-- Function Navigation -->
-        <SelectorBar x:Name="FunctionsSelectorBar" Grid.Row="0" SelectionChanged="FunctionsSelectorBar_SelectionChanged" Margin="0,0,0,16">
-            <SelectorBarItem x:Name="GBAuthorUpdateSelectorItem" Tag="GBAuthorUpdate">
-                <StackPanel Orientation="Horizontal" Spacing="8" Margin="12,8">
-                    <FontIcon Glyph="&#xE895;" FontSize="16"/>
-                    <TextBlock x:Name="GBAuthorUpdateSelectorText" Text="GameBanana Author Update" VerticalAlignment="Center" FontSize="22"/>
-                </StackPanel>
-            </SelectorBarItem>
-            <SelectorBarItem x:Name="HotkeyFinderSelectorItem" Tag="HotkeyFinder">
-                <StackPanel Orientation="Horizontal" Spacing="8" Margin="12,8">
-                    <FontIcon Glyph="&#xE765;" FontSize="16"/>
-                    <TextBlock x:Name="HotkeyFinderSelectorText" Text="Hotkey Finder" VerticalAlignment="Center" FontSize="22"/>
-                </StackPanel>
-            </SelectorBarItem>
-            <SelectorBarItem x:Name="StatusKeeperSelectorItem" Tag="StatusKeeperPage">
-                <StackPanel Orientation="Horizontal" Spacing="8" Margin="12,8">
-                    <FontIcon Glyph="&#xE8F4;" FontSize="16"/>
-                    <TextBlock x:Name="StatusKeeperSelectorText" Text="Status Keeper" VerticalAlignment="Center" FontSize="22"/>
-                </StackPanel>
-            </SelectorBarItem>
-            <SelectorBarItem x:Name="ModInfoBackupSelectorItem" Tag="ModInfoBackup">
-                <StackPanel Orientation="Horizontal" Spacing="8" Margin="12,8">
-                    <FontIcon Glyph="&#xE8C8;" FontSize="16"/>
-                    <TextBlock x:Name="ModInfoBackupSelectorText" Text="Mod Info Backup" VerticalAlignment="Center" FontSize="22"/>
-                </StackPanel>
-            </SelectorBarItem>
-        </SelectorBar>
-        
-        <!-- Content -->
-        <ScrollViewer x:Name="FunctionContentScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="FunctionContentPanel" Spacing="15" Margin="0,0,24,0">
-                
-                <!-- Game Selector Content -->
-                <StackPanel x:Name="GameSelectorPanel" Spacing="16" Visibility="Collapsed">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300"/>
-                            <ColumnDefinition Width="32"/>
-                            <ColumnDefinition Width="200"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="CurrentGameLabel" Text="Current Game:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="14" FontWeight="SemiBold"/>
-                        <ComboBox x:Name="GameSelectionComboBox" Grid.Row="0" Grid.Column="2" Width="200" VerticalAlignment="Center" SelectionChanged="GameSelectionComboBox_SelectionChanged">
-                            <ComboBoxItem Content="Genshin Impact" Tag="GenshinImpact"/>
-                            <ComboBoxItem Content="Honkai: Star Rail" Tag="HonkaiStarRail"/>
-                            <ComboBoxItem Content="Zenless Zone Zero" Tag="ZenlessZoneZero"/>
-                            <ComboBoxItem Content="Wuthering Waves" Tag="WutheringWaves"/>
-                        </ComboBox>
-                        <TextBlock x:Name="GameDescriptionLabel" Text="Select the game you want to manage mods for. This affects mod library paths and function behavior." Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,8,0,0"/>
-                    </Grid>
-                </StackPanel>
-                
-                <!-- GameBanana Author Update Content -->
-                <StackPanel x:Name="GBAuthorUpdatePanel" Spacing="16" Visibility="Visible">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300"/>
-                            <ColumnDefinition Width="32"/>
-                            <ColumnDefinition Width="44"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="UpdateAuthorsLabel" Text="" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="14"/>
-                        <ToggleSwitch x:Name="UpdateAuthorsSwitch" Grid.Row="0" Grid.Column="2" Width="44" MinWidth="0" VerticalAlignment="Center" IsOn="True" OffContent="" OnContent="" Toggled="UpdateAuthorsSwitch_Toggled"/>
-                        <TextBlock x:Name="SmartUpdateLabel" Text="" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="14"/>
-                        <ToggleSwitch x:Name="SmartUpdateSwitch" Grid.Row="1" Grid.Column="2" Width="44" MinWidth="0" VerticalAlignment="Center" IsOn="False" OffContent="" OnContent="" Toggled="SmartUpdateSwitch_Toggled"/>
-                        <TextBlock x:Name="SafetyLockLabel" Text="" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="14"/>
-                        <ToggleSwitch x:Name="SafetyLockSwitch" Grid.Row="2" Grid.Column="2" Width="44" MinWidth="0" VerticalAlignment="Center" IsOn="False" OffContent="" OnContent="" Toggled="SafetyLockSwitch_Toggled"/>
-                    </Grid>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,24,0,0">
-                        <Button x:Name="UpdateButton" Height="32" MinWidth="160" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="UpdateButton_Click">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <TextBlock x:Name="UpdateButtonText" Text=""/>
-                                <FontIcon x:Name="UpdateIcon" Glyph="&#xE753;" FontSize="16" Visibility="Visible"/>
-                                <FontIcon x:Name="CancelIcon" Glyph="&#xE711;" FontSize="16" Visibility="Collapsed"/>
-                            </StackPanel>
-                        </Button>
-                        <ProgressBar x:Name="UpdateProgressBar" Width="130" Height="32" IsIndeterminate="True" Visibility="Collapsed" ShowPaused="False" ShowError="False" Margin="20,0,0,0" />
-                    </StackPanel>
-                </StackPanel>
-                
-                <!-- Hotkey Finder Content -->
-                <StackPanel x:Name="HotkeyFinderPanel" Spacing="16" Visibility="Collapsed">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300"/>
-                            <ColumnDefinition Width="32"/>
-                            <ColumnDefinition Width="44"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="AutoDetectLabel" Text="" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="14"/>
-                        <ToggleSwitch x:Name="AutoDetectToggle" Grid.Row="0" Grid.Column="2" Width="44" MinWidth="0" VerticalAlignment="Center" IsOn="True" OffContent="" OnContent="" Toggled="AutoDetectToggle_Toggled" 
-                                      ToolTipService.ToolTip="Automatyczne uzupełnianie hotkey po dodaniu moda"/>
-                        <TextBlock x:Name="RefreshAllLabel" Text="" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" FontSize="14"/>
-                        <ToggleSwitch x:Name="RefreshAllToggle" Grid.Row="1" Grid.Column="2" Width="44" MinWidth="0" VerticalAlignment="Center" IsOn="False" OffContent="" OnContent="" Toggled="RefreshAllToggle_Toggled"
-                                      ToolTipService.ToolTip="Wyszukuje i aktualizuje hotkey dla wszystkich obecnych modów"/>
-                    </Grid>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,24,0,0">
-                        <Button x:Name="RefreshButton" Height="32" MinWidth="160" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="RefreshButton_Click">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <TextBlock x:Name="RefreshButtonText" Text=""/>
-                                <FontIcon x:Name="RefreshIcon" Glyph="&#xE72C;" FontSize="16" Visibility="Visible"/>
-                                <FontIcon x:Name="CancelIcon2" Glyph="&#xE711;" FontSize="16" Visibility="Collapsed"/>
-                            </StackPanel>
-                        </Button>
-                        <ProgressBar x:Name="RefreshProgressBar" Width="130" Height="32" IsIndeterminate="True" Visibility="Collapsed" ShowPaused="False" ShowError="False" Margin="20,0,0,0" />
-                    </StackPanel>
-                </StackPanel>
-                
-                <!-- Status Keeper Content -->
-                <StackPanel x:Name="StatusKeeperPanel" Spacing="16" Visibility="Collapsed">
-                    <SelectorBar x:Name="StatusKeeperSelectorBar" SelectionChanged="StatusKeeperSelectorBar_SelectionChanged" Margin="0,0,0,16">
-                        <SelectorBarItem x:Name="StatusKeeperSyncSelectorItem" Text="" IsSelected="True">
-                            <SelectorBarItem.Icon>
-                                <FontIcon Glyph="&#xE895;" />
-                            </SelectorBarItem.Icon>
-                        </SelectorBarItem>
-                        <SelectorBarItem x:Name="StatusKeeperBackupSelectorItem" Text="">
-                            <SelectorBarItem.Icon>
-                                <FontIcon Glyph="&#xEA35;" />
-                            </SelectorBarItem.Icon>
-                        </SelectorBarItem>
-                        <SelectorBarItem x:Name="StatusKeeperLogsSelectorItem" Text="">
-                            <SelectorBarItem.Icon>
-                                <FontIcon Glyph="&#xF000;" />
-                            </SelectorBarItem.Icon>
-                        </SelectorBarItem>
-                    </SelectorBar>
-                    
-                    <!-- Status Keeper Sync Content -->
-                    <StackPanel x:Name="StatusKeeperSyncPanel" Spacing="16" Visibility="Visible">
-                        <!-- File Path Selection -->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock x:Name="D3dxFilePathLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                            <BreadcrumbBar x:Name="D3dxFilePathBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                            <Button x:Name="D3dxFilePathPickButton" Click="D3dxFilePathPickButton_Click" Width="32" Height="32" Padding="0">
-                                <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                            </Button>
-                            <Button x:Name="D3dxFilePathDefaultButton" Click="D3dxFilePathDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0">
-                                <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                            </Button>
-                        </StackPanel>
-                        <!-- Backup Confirmation Toggle -->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock x:Name="BackupConfirmationLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                            <ToggleSwitch x:Name="BackupConfirmationToggle" Toggled="BackupConfirmationToggle_Toggled" Width="120" OnContent="" OffContent="" Margin="-40,0,0,0"/>
-                        </StackPanel>
-                        <!-- Dynamic Sync Toggle -->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock x:Name="DynamicSyncLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                            <ToggleSwitch x:Name="DynamicSyncToggle" Toggled="DynamicSyncToggle_Toggled" Width="120" OnContent="" OffContent="" Margin="-40,0,0,0"/>
-                        </StackPanel>
-                        <!-- Manual Sync Button -->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock x:Name="ManualSyncLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                            <Button x:Name="ManualSyncButton" Height="32" MinWidth="120" Click="ManualSyncButton_Click" Margin="-40,0,0,0">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <TextBlock x:Name="ManualSyncButtonText" Text=""/>
-                                    <FontIcon Glyph="&#xE895;" FontSize="16"/>
-                                </StackPanel>
-                            </Button>
-                            <ProgressBar x:Name="ManualSyncProgressBar" Width="130" Height="32" IsIndeterminate="True" Visibility="Collapsed" ShowPaused="False" ShowError="False" Margin="10,0,0,0" />
-                        </StackPanel>
-                    </StackPanel>
-                    
-                    <!-- Status Keeper Backup Content -->
-                    <StackPanel x:Name="StatusKeeperBackupPanel" Spacing="16" Visibility="Collapsed">
-                        <!-- Create Backup -->
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="255"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="CreateBackupLabel" Text="" VerticalAlignment="Center" Grid.Column="0"/>
-                            <Button x:Name="CreateBackupButton" Height="32" MinWidth="120" Click="CreateBackupButton_Click" Grid.Column="1" Margin="-40,0,0,0">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <TextBlock x:Name="CreateBackupButtonText" Text=""/>
-                                    <FontIcon Glyph="&#xEA35;" FontSize="16"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="CheckBackupButton" Height="32" MinWidth="120" Click="CheckBackupButton_Click" Grid.Column="2" Margin="8,0,0,0">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <TextBlock x:Name="CheckBackupButtonText" Text=""/>
-                                    <FontIcon Glyph="&#xF0B5;" FontSize="16"/>
-                                </StackPanel>
-                            </Button>
-                            <StackPanel Orientation="Horizontal" Grid.Column="3" Margin="10,0,0,0">
-                                <ProgressBar x:Name="CreateBackupProgressBar" IsIndeterminate="True" Width="100" Visibility="Collapsed" VerticalAlignment="Center"/>
-                                <ProgressBar x:Name="CheckBackupProgressBar" IsIndeterminate="True" Width="100" Visibility="Collapsed" Margin="10,0,0,0" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Grid>
-                        
-                        <!-- Safety Override (3-step safety) -->
-                        <Grid VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="255"/>
-                                <ColumnDefinition Width="1"/>
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition Width="4"/>
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition Width="4"/>
-                                <ColumnDefinition Width="50"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="SafetyOverrideLabel" Text="" Grid.Column="0" VerticalAlignment="Center" Foreground="Red" FontWeight="SemiBold"/>
-                            <ToggleSwitch x:Name="SafetyOverride1Toggle" Grid.Column="2" Toggled="SafetyOverride1Toggle_Toggled" OnContent="" OffContent="" Margin="-33,0,0,0"/>
-                            <ToggleSwitch x:Name="SafetyOverride2Toggle" Grid.Column="4" Toggled="SafetyOverride2Toggle_Toggled" OnContent="" OffContent="" Margin="-12,0,0,0"/>
-                            <ToggleSwitch x:Name="SafetyOverride3Toggle" Grid.Column="6" Toggled="SafetyOverride3Toggle_Toggled" OnContent="" OffContent="" Margin="-8,0,0,0"/>
-                        </Grid>
-                        
-                        <!-- Restore Backup -->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock x:Name="RestoreBackupLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                            <Button x:Name="RestoreBackupButton" Height="32" MinWidth="120" Click="StatusKeeperRestoreBackupButton_Click" Margin="-40,0,0,0" IsEnabled="False">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <TextBlock x:Name="RestoreBackupButtonText" Text=""/>
-                                    <FontIcon Glyph="&#xE8EB;" FontSize="16"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                        
-                        <!-- Delete Backups -->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock x:Name="DeleteBackupsLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                            <Button x:Name="DeleteBackupsButton" Height="32" MinWidth="120" Click="DeleteBackupsButton_Click" Margin="-40,0,0,0" IsEnabled="False">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <TextBlock x:Name="DeleteBackupsButtonText" Text=""/>
-                                    <FontIcon Glyph="&#xE74D;" FontSize="16"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                    </StackPanel>
-                    
-                    <!-- Status Keeper Logs Content -->
-                    <StackPanel x:Name="StatusKeeperLogsPanel" Spacing="16" Visibility="Collapsed">
-                        <!-- Logging Toggle -->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock x:Name="LoggingLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                            <ToggleSwitch x:Name="LoggingToggle" Width="120" OnContent="" OffContent="" Toggled="LoggingToggle_Toggled" Margin="-40,0,0,0"/>
-                        </StackPanel>
-                        
-                        <!-- Log Buttons -->
-                        <StackPanel Orientation="Horizontal" Spacing="12">
-                            <Button x:Name="OpenLogButton" Height="32" MinWidth="120" Click="OpenLogButton_Click">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <TextBlock x:Name="OpenLogButtonText" Text="" VerticalAlignment="Center"/>
-                                    <FontIcon Glyph="&#xE8A7;" FontSize="16"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="ClearLogButton" Height="32" MinWidth="120" Click="ClearLogButton_Click">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <TextBlock x:Name="ClearLogButtonText" Text="" VerticalAlignment="Center"/>
-                                    <FontIcon Glyph="&#xE74D;" FontSize="16"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                        
-                        <!-- Log Viewer -->
-                        <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" 
-                                BorderThickness="1" 
-                                CornerRadius="8" 
-                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                Height="300">
-                            <ScrollViewer x:Name="LogsScrollViewer" 
-                                          VerticalScrollBarVisibility="Auto" 
-                                          HorizontalScrollBarVisibility="Auto"
-                                          ZoomMode="Disabled"
-                                          Padding="12">
-                                <TextBlock x:Name="LogsTextBlock" 
-                                           Text=""
-                                           FontFamily="Consolas"
-                                           FontSize="12"
-                                           TextWrapping="Wrap"
-                                           IsTextSelectionEnabled="True"/>
-                            </ScrollViewer>
-                        </Border>
-                    </StackPanel>
-                </StackPanel>
-                
-                <!-- Mod Info Backup Content -->
-                <StackPanel x:Name="ModInfoBackupPanel" Spacing="16" Visibility="Collapsed">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button x:Name="CreateBackupsButton" Height="36" Width="220" Click="CreateBackupsButton_Click" Padding="0">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <TextBlock x:Name="CreateBackupsText" Text="Backup all mod.json"/>
-                                <FontIcon Glyph="&#xEA35;" FontSize="16"/>
-                            </StackPanel>
-                        </Button>
-                        <ProgressBar x:Name="CreateBackupsProgressBar" Width="130" Height="32" IsIndeterminate="True" Visibility="Collapsed" ShowPaused="False" ShowError="False" Margin="10,0,0,0" />
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Spacing="8">
-                        <Grid Height="40">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="220"/>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="48"/>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="RestoreBackup1Button" Height="32" Width="220" Tag="1" Click="RestoreBackupButton_Click" Grid.Column="0" Padding="0">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <TextBlock x:Name="RestoreBackup1Text" Text="Restore backup 1 (newest)"/>
-                                    <FontIcon Glyph="&#xE8EB;" FontSize="16"/>
-                                </StackPanel>
-                            </Button>
-                            <Border Grid.Column="1"/>
-                            <Button x:Name="DeleteBackup1Button" Height="32" Width="40" Grid.Column="2" Click="DeleteBackupButton_Click" Tag="1" Padding="0">
-                                <FontIcon Glyph="&#xE74D;" FontSize="18"/>
-                            </Button>
-                            <Border Grid.Column="3"/>
-                            <TextBlock x:Name="Backup1Info" Grid.Column="4" VerticalAlignment="Center" FontSize="14"/>
-                        </Grid>
-                        <Grid Height="40">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="220"/>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="48"/>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="RestoreBackup2Button" Height="32" Width="220" Tag="2" Click="RestoreBackupButton_Click" Grid.Column="0" Padding="0">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <TextBlock x:Name="RestoreBackup2Text" Text="Restore backup 2 (middle)"/>
-                                    <FontIcon Glyph="&#xE8EB;" FontSize="16"/>
-                                </StackPanel>
-                            </Button>
-                            <Border Grid.Column="1"/>
-                            <Button x:Name="DeleteBackup2Button" Height="32" Width="40" Grid.Column="2" Click="DeleteBackupButton_Click" Tag="2" Padding="0">
-                                <FontIcon Glyph="&#xE74D;" FontSize="18"/>
-                            </Button>
-                            <Border Grid.Column="3"/>
-                            <TextBlock x:Name="Backup2Info" Grid.Column="4" VerticalAlignment="Center" FontSize="14"/>
-                        </Grid>
-                        <Grid Height="40">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="220"/>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="48"/>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="RestoreBackup3Button" Height="32" Width="220" Tag="3" Click="RestoreBackupButton_Click" Grid.Column="0" Padding="0">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <TextBlock x:Name="RestoreBackup3Text" Text="Restore backup 3 (oldest)"/>
-                                    <FontIcon Glyph="&#xE8EB;" FontSize="16"/>
-                                </StackPanel>
-                            </Button>
-                            <Border Grid.Column="1"/>
-                            <Button x:Name="DeleteBackup3Button" Height="32" Width="40" Grid.Column="2" Click="DeleteBackupButton_Click" Tag="3" Padding="0">
-                                <FontIcon Glyph="&#xE74D;" FontSize="18"/>
-                            </Button>
-                            <Border Grid.Column="3"/>
-                            <TextBlock x:Name="Backup3Info" Grid.Column="4" VerticalAlignment="Center" FontSize="14"/>
-                        </Grid>
-                    </StackPanel>
-                </StackPanel>
-                
+    xmlns:local="using:ZZZ_Mod_Manager_X.Pages">
+    <Grid Padding="24">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Spacing="16">
+                <TextBlock x:Name="FunctionsTitle" Text="" FontSize="24" FontWeight="Bold" Margin="0,0,0,16" />
+                <!-- Functions List -->
+                <ItemsControl x:Name="FunctionsList">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Spacing="8"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="44"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}"
+                                           Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           TextWrapping="WrapWholeWords"/>
+                                <Button x:Name="FunctionButton" 
+                                       Grid.Column="2"
+                                       Width="44"
+                                       Click="FunctionButton_Click"
+                                       Padding="8">
+                                    <FontIcon Glyph="&#xE713;" FontSize="16"/>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
         </ScrollViewer>
     </Grid>

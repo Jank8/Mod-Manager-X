@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Mod_Manager_X.Pages
+namespace ZZZ_Mod_Manager_X.Pages
 {
     public sealed partial class ModInfoBackupPage : Page
     {
         private Dictionary<string, string> _lang = new();
-        private string ModLibraryPath => Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
+        private string ModLibraryPath => ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
         private const int MaxBackups = 3;
 
         public ModInfoBackupPage()
@@ -28,7 +28,7 @@ namespace Mod_Manager_X.Pages
         {
             try
             {
-                var langFile = Mod_Manager_X.SettingsManager.Current?.LanguageFile ?? "en.json";
+                var langFile = ZZZ_Mod_Manager_X.SettingsManager.Current?.LanguageFile ?? "en.json";
                 var langPath = Path.Combine(System.AppContext.BaseDirectory, "Language", "ModInfoBackup", langFile);
                 if (!File.Exists(langPath))
                     langPath = Path.Combine(System.AppContext.BaseDirectory, "Language", "ModInfoBackup", "en.json");

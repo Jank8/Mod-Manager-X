@@ -9,7 +9,7 @@ using Microsoft.UI.Xaml.Media;
 using Windows.UI;
 using System;
 
-namespace Mod_Manager_X.Pages
+namespace ZZZ_Mod_Manager_X.Pages
 {
     public sealed partial class ModDetailPage : Page
     {

@@ -1,62 +1,19 @@
 <Page
-    x:Class="Mod_Manager_X.Pages.SettingsPage"
+    x:Class="ZZZ_Mod_Manager_X.Pages.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Mod_Manager_X.Pages">
+    xmlns:local="using:ZZZ_Mod_Manager_X.Pages">
 
     <Grid Padding="24,24,0,24">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <!-- Navigation -->
-        <SelectorBar x:Name="SettingsSelectorBar" Grid.Row="0" SelectionChanged="SettingsSelectorBar_SelectionChanged" Margin="0,0,0,16">
-                <SelectorBarItem x:Name="GeneralSelectorItem" Tag="General">
-                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="12,8">
-                        <FontIcon Glyph="&#xE713;" FontSize="16"/>
-                        <TextBlock x:Name="GeneralSelectorText" Text="General" VerticalAlignment="Center" FontSize="22"/>
-                    </StackPanel>
-                </SelectorBarItem>
-                <SelectorBarItem x:Name="GenshinImpactSelectorItem" Tag="GenshinImpact">
-                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="12,8">
-                        <FontIcon Glyph="&#xE7FC;" FontSize="16"/>
-                        <TextBlock x:Name="GenshinImpactSelectorText" Text="Genshin Impact" VerticalAlignment="Center" FontSize="22"/>
-                    </StackPanel>
-                </SelectorBarItem>
-                <SelectorBarItem x:Name="HonkaiImpact3rdSelectorItem" Tag="HonkaiImpact3rd">
-                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="12,8">
-                        <FontIcon Glyph="&#xE7FC;" FontSize="16"/>
-                        <TextBlock x:Name="HonkaiImpact3rdSelectorText" Text="Honkai Impact 3rd" VerticalAlignment="Center" FontSize="22"/>
-                    </StackPanel>
-                </SelectorBarItem>
-                <SelectorBarItem x:Name="HonkaiStarRailSelectorItem" Tag="HonkaiStarRail">
-                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="12,8">
-                        <FontIcon Glyph="&#xE7FC;" FontSize="16"/>
-                        <TextBlock x:Name="HonkaiStarRailSelectorText" Text="Honkai Star Rail" VerticalAlignment="Center" FontSize="22"/>
-                    </StackPanel>
-                </SelectorBarItem>
-                <SelectorBarItem x:Name="WutheringWavesSelectorItem" Tag="WutheringWaves">
-                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="12,8">
-                        <FontIcon Glyph="&#xE7FC;" FontSize="16"/>
-                        <TextBlock x:Name="WutheringWavesSelectorText" Text="Wuthering Waves" VerticalAlignment="Center" FontSize="22"/>
-                    </StackPanel>
-                </SelectorBarItem>
-                <SelectorBarItem x:Name="ZenlessZoneZeroSelectorItem" Tag="ZenlessZoneZero">
-                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="12,8">
-                        <FontIcon Glyph="&#xE7FC;" FontSize="16"/>
-                        <TextBlock x:Name="ZenlessZoneZeroSelectorText" Text="Zenless Zone Zero" VerticalAlignment="Center" FontSize="22"/>
-                    </StackPanel>
-                </SelectorBarItem>
-        </SelectorBar>
-        
-        <!-- Content Frame -->
-        <ScrollViewer x:Name="SettingsContentScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="SettingsContentPanel" Spacing="15" Margin="0,0,24,0">
-                <!-- General Settings Content -->
-                <StackPanel x:Name="GeneralSettingsPanel" Spacing="15" Visibility="Visible">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Spacing="15">
+                <Grid Height="40" Margin="0,0,0,16">
+                    <TextBlock x:Name="SettingsTitle" Text="" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
                         <TextBlock x:Name="ThemeLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
                         <SelectorBar x:Name="ThemeSelectorBar" Width="410" SelectionChanged="ThemeSelectorBar_SelectionChanged" Margin="-40,0,8,0">
                             <SelectorBarItem x:Name="ThemeSelectorAuto" Tag="Auto" Margin="0,0,8,0">
@@ -77,162 +34,62 @@
                                     <TextBlock x:Name="ThemeSelectorDarkText" Text="Dark" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </SelectorBarItem>
-                        </SelectorBar>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="LanguageLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <ComboBox x:Name="LanguageComboBox" Width="200" SelectionChanged="LanguageComboBox_SelectionChanged" Margin="-40,0,0,0"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="OptimizePreviewsLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <Button x:Name="OptimizePreviewsButton" Width="40" Height="32" Padding="0" Click="OptimizePreviewsButton_Click" Margin="-40,0,0,0">
-                            <FontIcon x:Name="OptimizePreviewsButtonIcon" Glyph="&#xE89E;" FontSize="20"/>
-                        </Button>
-                        <ProgressBar x:Name="OptimizePreviewsProgressBar" Width="130" IsIndeterminate="True" Visibility="Collapsed" ShowPaused="False" ShowError="False" Margin="20,0,0,0" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="DynamicModSearchLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <ToggleSwitch x:Name="DynamicModSearchToggle" Toggled="DynamicModSearchToggle_Toggled" Width="120" OnContent="" OffContent="" Margin="-40,0,0,0"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="GridLoggingLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <ToggleSwitch x:Name="GridLoggingToggle" Toggled="GridLoggingToggle_Toggled" Width="120" OnContent="" OffContent="" Margin="-40,0,0,0" ToolTipService.ToolTip="Enable detailed logging for grid performance debugging"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="ShowOrangeAnimationLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <ToggleSwitch x:Name="ShowOrangeAnimationToggle" Toggled="ShowOrangeAnimationToggle_Toggled" Width="120" OnContent="" OffContent="" Margin="-40,0,0,0"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="ModGridZoomLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <ToggleSwitch x:Name="ModGridZoomToggle" Toggled="ModGridZoomToggle_Toggled" Width="120" OnContent="" OffContent="" Margin="-40,0,0,0"/>
-                    </StackPanel>
+                    </SelectorBar>
                 </StackPanel>
-                
-                <!-- Genshin Impact Settings Content -->
-                <StackPanel x:Name="GenshinImpactSettingsPanel" Spacing="15" Visibility="Collapsed">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="GIXXMIModsDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <BreadcrumbBar x:Name="GIXXMIModsDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                        <Button x:Name="GIXXMIModsDirectoryPickButton" Click="GIXXMIModsDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                        </Button>
-                        <Button x:Name="GIXXMIModsDirectoryDefaultButton" Click="GIXXMIModsDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
-                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="GIModLibraryDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <BreadcrumbBar x:Name="GIModLibraryDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                        <Button x:Name="GIModLibraryDirectoryPickButton" Click="GIModLibraryDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                        </Button>
-                        <Button x:Name="GIModLibraryDirectoryDefaultButton" Click="GIModLibraryDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
-                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                        </Button>
-                    </StackPanel>
+                </Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="LanguageLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                    <ComboBox x:Name="LanguageComboBox" Width="200" SelectionChanged="LanguageComboBox_SelectionChanged" Margin="-40,0,0,0"/>
                 </StackPanel>
-                
-                <!-- Honkai Impact 3rd Settings Content -->
-                <StackPanel x:Name="HonkaiImpact3rdSettingsPanel" Spacing="15" Visibility="Collapsed">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="HIXXMIModsDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <BreadcrumbBar x:Name="HIXXMIModsDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                        <Button x:Name="HIXXMIModsDirectoryPickButton" Click="HIXXMIModsDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                        </Button>
-                        <Button x:Name="HIXXMIModsDirectoryDefaultButton" Click="HIXXMIModsDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
-                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="HIModLibraryDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <BreadcrumbBar x:Name="HIModLibraryDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                        <Button x:Name="HIModLibraryDirectoryPickButton" Click="HIModLibraryDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                        </Button>
-                        <Button x:Name="HIModLibraryDirectoryDefaultButton" Click="HIModLibraryDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
-                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                        </Button>
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="OptimizePreviewsLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                    <Button x:Name="OptimizePreviewsButton" Width="40" Height="32" Padding="0" Click="OptimizePreviewsButton_Click" Margin="-40,0,0,0">
+                        <FontIcon x:Name="OptimizePreviewsButtonIcon" Glyph="&#xE89E;" FontSize="20"/>
+                    </Button>
+                    <ProgressBar x:Name="OptimizePreviewsProgressBar" Width="130" IsIndeterminate="True" Visibility="Collapsed" ShowPaused="False" ShowError="False" Margin="20,0,0,0" />
                 </StackPanel>
-                
-                <!-- Honkai Star Rail Settings Content -->
-                <StackPanel x:Name="HonkaiStarRailSettingsPanel" Spacing="15" Visibility="Collapsed">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="SRXXMIModsDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <BreadcrumbBar x:Name="SRXXMIModsDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                        <Button x:Name="SRXXMIModsDirectoryPickButton" Click="SRXXMIModsDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                        </Button>
-                        <Button x:Name="SRXXMIModsDirectoryDefaultButton" Click="SRXXMIModsDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
-                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="SRModLibraryDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <BreadcrumbBar x:Name="SRModLibraryDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                        <Button x:Name="SRModLibraryDirectoryPickButton" Click="SRModLibraryDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                        </Button>
-                        <Button x:Name="SRModLibraryDirectoryDefaultButton" Click="SRModLibraryDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
-                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                        </Button>
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="DynamicModSearchLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                    <ToggleSwitch x:Name="DynamicModSearchToggle" Toggled="DynamicModSearchToggle_Toggled" Width="120" OnContent="" OffContent="" Margin="-40,0,0,0"/>
                 </StackPanel>
-                
-                <!-- Wuthering Waves Settings Content -->
-                <StackPanel x:Name="WutheringWavesSettingsPanel" Spacing="15" Visibility="Collapsed">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="WWXXMIModsDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <BreadcrumbBar x:Name="WWXXMIModsDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                        <Button x:Name="WWXXMIModsDirectoryPickButton" Click="WWXXMIModsDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                        </Button>
-                        <Button x:Name="WWXXMIModsDirectoryDefaultButton" Click="WWXXMIModsDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
-                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="WWModLibraryDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <BreadcrumbBar x:Name="WWModLibraryDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                        <Button x:Name="WWModLibraryDirectoryPickButton" Click="WWModLibraryDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                        </Button>
-                        <Button x:Name="WWModLibraryDirectoryDefaultButton" Click="WWModLibraryDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
-                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                        </Button>
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="GridLoggingLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                    <ToggleSwitch x:Name="GridLoggingToggle" Toggled="GridLoggingToggle_Toggled" Width="120" OnContent="" OffContent="" Margin="-40,0,0,0" ToolTipService.ToolTip="Enable detailed logging for grid performance debugging"/>
                 </StackPanel>
-                
-                <!-- Zenless Zone Zero Settings Content -->
-                <StackPanel x:Name="ZenlessZoneZeroSettingsPanel" Spacing="15" Visibility="Collapsed">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="XXMIModsDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <BreadcrumbBar x:Name="XXMIModsDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                        <Button x:Name="XXMIModsDirectoryPickButton" Click="XXMIModsDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                        </Button>
-                        <Button x:Name="XXMIModsDirectoryDefaultButton" Click="XXMIModsDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
-                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="ModLibraryDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
-                        <BreadcrumbBar x:Name="ModLibraryDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
-                        <Button x:Name="ModLibraryDirectoryPickButton" Click="ModLibraryDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
-                            <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
-                        </Button>
-                        <Button x:Name="ModLibraryDirectoryDefaultButton" Click="ModLibraryDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
-                            <FontIcon Glyph="&#xE72C;" FontSize="14"/>
-                        </Button>
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="ShowOrangeAnimationLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                    <ToggleSwitch x:Name="ShowOrangeAnimationToggle" Toggled="ShowOrangeAnimationToggle_Toggled" Width="120" OnContent="" OffContent="" Margin="-40,0,0,0"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="ModGridZoomLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                    <ToggleSwitch x:Name="ModGridZoomToggle" Toggled="ModGridZoomToggle_Toggled" Width="120" OnContent="" OffContent="" Margin="-40,0,0,0"/>
+                </StackPanel>
+                <!-- Path selection lines moved to the bottom -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="XXMIModsDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                    <BreadcrumbBar x:Name="XXMIModsDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
+                    <Button x:Name="XXMIModsDirectoryPickButton" Click="XXMIModsDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
+                        <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
+                    </Button>
+                    <Button x:Name="XXMIModsDirectoryDefaultButton" Click="XXMIModsDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
+                        <FontIcon Glyph="&#xE72C;" FontSize="14"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="ModLibraryDirectoryLabel" Text="" VerticalAlignment="Center" Margin="0,0,8,0" Width="255"/>
+                    <BreadcrumbBar x:Name="ModLibraryDirectoryBreadcrumb" Width="410" Margin="-40,0,8,0" IsHitTestVisible="False" IsTabStop="False"/>
+                    <Button x:Name="ModLibraryDirectoryPickButton" Click="ModLibraryDirectoryPickButton_Click" Width="32" Height="32" Padding="0" ToolTipService.ToolTip="Select directory">
+                        <FontIcon Glyph="&#xE8B7;" FontSize="14"/>
+                    </Button>
+                    <Button x:Name="ModLibraryDirectoryDefaultButton" Click="ModLibraryDirectoryDefaultButton_Click" Width="32" Height="32" Padding="0" Margin="8,0,0,0" ToolTipService.ToolTip="">
+                        <FontIcon Glyph="&#xE72C;" FontSize="14"/>
+                    </Button>
+                </StackPanel>
+
             </StackPanel>
         </ScrollViewer>
-        
-        <!-- About Button -->
         <Button x:Name="AboutButton"
-                Grid.Row="2"
+                Grid.Row="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom"
                 Margin="0,32,0,0"

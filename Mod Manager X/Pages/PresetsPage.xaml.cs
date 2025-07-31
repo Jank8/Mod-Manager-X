@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using System.Threading.Tasks;
 
-namespace Mod_Manager_X.Pages
+namespace ZZZ_Mod_Manager_X.Pages
 {
     public sealed partial class PresetsPage : Page
     {
@@ -51,8 +51,8 @@ namespace Mod_Manager_X.Pages
                 PresetComboBox.Items.Add(preset);
                 _presetNames.Add(preset);
             }
-            // Przywrï¿½ï¿½ wybrany preset z ustawieï¿½
-            int selectedIndex = Mod_Manager_X.SettingsManager.Current.SelectedPresetIndex;
+            // Przywróæ wybrany preset z ustawieñ
+            int selectedIndex = ZZZ_Mod_Manager_X.SettingsManager.Current.SelectedPresetIndex;
             if (selectedIndex >= 0 && selectedIndex < PresetComboBox.Items.Count)
                 PresetComboBox.SelectedIndex = selectedIndex;
             else
@@ -114,7 +114,7 @@ namespace Mod_Manager_X.Pages
                 var fileName = GetPresetFileNameFromComboBox(presetName);
                 try
                 {
-                    Mod_Manager_X.Pages.ModGridPage.ApplyPreset(fileName);
+                    ZZZ_Mod_Manager_X.Pages.ModGridPage.ApplyPreset(fileName);
                     await ShowDialog(LanguageManager.Instance.T("Success_Title"), LanguageManager.Instance.T("Preset_Loaded"));
                 }
                 catch (Exception ex)
@@ -183,8 +183,8 @@ namespace Mod_Manager_X.Pages
         {
             PresetModsListView.Items.Clear();
             int selectedIndex = PresetComboBox.SelectedIndex;
-            Mod_Manager_X.SettingsManager.Current.SelectedPresetIndex = selectedIndex;
-            Mod_Manager_X.SettingsManager.Save();
+            ZZZ_Mod_Manager_X.SettingsManager.Current.SelectedPresetIndex = selectedIndex;
+            ZZZ_Mod_Manager_X.SettingsManager.Save();
             if (selectedIndex >= 0 && selectedIndex < _presetNames.Count)
             {
                 var fileName = _presetNames[selectedIndex];
@@ -214,10 +214,10 @@ namespace Mod_Manager_X.Pages
             if (e.ClickedItem is string modInfo)
             {
                 var modName = modInfo.Split('(')[0].Trim();
-                var mainWindow = (App.Current as App)?.MainWindow as Mod_Manager_X.MainWindow;
+                var mainWindow = (App.Current as App)?.MainWindow as ZZZ_Mod_Manager_X.MainWindow;
                 if (mainWindow != null)
                 {
-                    mainWindow.GetContentFrame()?.Navigate(typeof(Mod_Manager_X.Pages.ModDetailPage), modName);
+                    mainWindow.GetContentFrame()?.Navigate(typeof(ZZZ_Mod_Manager_X.Pages.ModDetailPage), modName);
                 }
             }
         }

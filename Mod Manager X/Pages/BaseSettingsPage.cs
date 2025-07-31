@@ -5,7 +5,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Mod_Manager_X.Pages
+namespace ZZZ_Mod_Manager_X.Pages
 {
     /// <summary>
     /// Base class for settings pages that provides common functionality

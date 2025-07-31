@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace Mod_Manager_X
+namespace ZZZ_Mod_Manager_X
 {
     public static class PathValidator
     {

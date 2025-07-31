@@ -15,7 +15,7 @@ using WinRT.Interop;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace Mod_Manager_X.Pages
+namespace ZZZ_Mod_Manager_X.Pages
 {
     public sealed partial class SettingsPage : Page
     {
@@ -88,178 +88,9 @@ namespace Mod_Manager_X.Pages
                     break;
                 }
             }
-            // Initialize all breadcrumbs (including ZZZ)
-            InitializeAllBreadcrumbs();
-        }
-
-        public void UpdateSelectorBarForSelectedGame(string selectedGame)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(selectedGame))
-                {
-                    // No game selected - show all game selector items
-                    GenshinImpactSelectorItem.Visibility = Visibility.Visible;
-                    HonkaiImpact3rdSelectorItem.Visibility = Visibility.Visible;
-                    HonkaiStarRailSelectorItem.Visibility = Visibility.Visible;
-                    WutheringWavesSelectorItem.Visibility = Visibility.Visible;
-                    ZenlessZoneZeroSelectorItem.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    // Game selected - show only General + selected game
-                    GenshinImpactSelectorItem.Visibility = selectedGame == "GenshinImpact" ? Visibility.Visible : Visibility.Collapsed;
-                    HonkaiImpact3rdSelectorItem.Visibility = selectedGame == "HonkaiImpact3rd" ? Visibility.Visible : Visibility.Collapsed;
-                    HonkaiStarRailSelectorItem.Visibility = selectedGame == "HonkaiStarRail" ? Visibility.Visible : Visibility.Collapsed;
-                    WutheringWavesSelectorItem.Visibility = selectedGame == "WutheringWaves" ? Visibility.Visible : Visibility.Collapsed;
-                    ZenlessZoneZeroSelectorItem.Visibility = selectedGame == "ZenlessZoneZero" ? Visibility.Visible : Visibility.Collapsed;
-                    
-                    // If user is currently on a game-specific panel that's now hidden, switch to the selected game's panel
-                    SwitchToSelectedGamePanel(selectedGame);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to update SettingsPage selector bar: {ex.Message}");
-            }
-        }
-
-        private void SwitchToSelectedGamePanel(string selectedGame)
-        {
-            try
-            {
-                // Check if user is currently on a game-specific panel (not General)
-                bool isOnGamePanel = GenshinImpactSettingsPanel.Visibility == Visibility.Visible ||
-                                   HonkaiImpact3rdSettingsPanel.Visibility == Visibility.Visible ||
-                                   HonkaiStarRailSettingsPanel.Visibility == Visibility.Visible ||
-                                   WutheringWavesSettingsPanel.Visibility == Visibility.Visible ||
-                                   ZenlessZoneZeroSettingsPanel.Visibility == Visibility.Visible;
-
-                if (isOnGamePanel)
-                {
-                    // Hide all panels first
-                    GeneralSettingsPanel.Visibility = Visibility.Collapsed;
-                    GenshinImpactSettingsPanel.Visibility = Visibility.Collapsed;
-                    HonkaiImpact3rdSettingsPanel.Visibility = Visibility.Collapsed;
-                    HonkaiStarRailSettingsPanel.Visibility = Visibility.Collapsed;
-                    WutheringWavesSettingsPanel.Visibility = Visibility.Collapsed;
-                    ZenlessZoneZeroSettingsPanel.Visibility = Visibility.Collapsed;
-
-                    // Show the selected game's panel and update selector
-                    switch (selectedGame)
-                    {
-                        case "GenshinImpact":
-                            GenshinImpactSettingsPanel.Visibility = Visibility.Visible;
-                            SettingsSelectorBar.SelectedItem = GenshinImpactSelectorItem;
-                            break;
-                        case "HonkaiImpact3rd":
-                            HonkaiImpact3rdSettingsPanel.Visibility = Visibility.Visible;
-                            SettingsSelectorBar.SelectedItem = HonkaiImpact3rdSelectorItem;
-                            break;
-                        case "HonkaiStarRail":
-                            HonkaiStarRailSettingsPanel.Visibility = Visibility.Visible;
-                            SettingsSelectorBar.SelectedItem = HonkaiStarRailSelectorItem;
-                            break;
-                        case "WutheringWaves":
-                            WutheringWavesSettingsPanel.Visibility = Visibility.Visible;
-                            SettingsSelectorBar.SelectedItem = WutheringWavesSelectorItem;
-                            break;
-                        case "ZenlessZoneZero":
-                            ZenlessZoneZeroSettingsPanel.Visibility = Visibility.Visible;
-                            SettingsSelectorBar.SelectedItem = ZenlessZoneZeroSelectorItem;
-                            break;
-                        default:
-                            // Fallback to General if unknown game
-                            GeneralSettingsPanel.Visibility = Visibility.Visible;
-                            SettingsSelectorBar.SelectedItem = GeneralSelectorItem;
-                            break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to switch to selected game panel: {ex.Message}");
-            }
-        }
-
-        private void InitializeAllBreadcrumbs()
-        {
-            try
-            {
-                // Initialize ZZZ breadcrumbs (the main ones in Zenless Zone Zero settings)
-                // Use the new game-specific paths for ZZZ
-                SetBreadcrumbBar(XXMIModsDirectoryBreadcrumb, AppConstants.DEFAULT_XXMI_MODS_PATH);
-                SetBreadcrumbBar(ModLibraryDirectoryBreadcrumb, AppConstants.DEFAULT_MOD_LIBRARY_PATH);
-
-                // Initialize other game-specific breadcrumbs (keep as relative paths for display)
-                if (SettingsManager.Current.GameXXMIModsPaths.TryGetValue("GenshinImpact", out var giXXMIPath))
-                {
-                    SetBreadcrumbBar(GIXXMIModsDirectoryBreadcrumb, giXXMIPath);
-                }
-                if (SettingsManager.Current.GameModLibraryPaths.TryGetValue("GenshinImpact", out var giModPath))
-                {
-                    SetBreadcrumbBar(GIModLibraryDirectoryBreadcrumb, giModPath);
-                }
-
-                if (SettingsManager.Current.GameXXMIModsPaths.TryGetValue("HonkaiImpact3rd", out var hiXXMIPath))
-                {
-                    SetBreadcrumbBar(HIXXMIModsDirectoryBreadcrumb, hiXXMIPath);
-                }
-                if (SettingsManager.Current.GameModLibraryPaths.TryGetValue("HonkaiImpact3rd", out var hiModPath))
-                {
-                    SetBreadcrumbBar(HIModLibraryDirectoryBreadcrumb, hiModPath);
-                }
-
-                if (SettingsManager.Current.GameXXMIModsPaths.TryGetValue("HonkaiStarRail", out var srXXMIPath))
-                {
-                    SetBreadcrumbBar(SRXXMIModsDirectoryBreadcrumb, srXXMIPath);
-                }
-                if (SettingsManager.Current.GameModLibraryPaths.TryGetValue("HonkaiStarRail", out var srModPath))
-                {
-                    SetBreadcrumbBar(SRModLibraryDirectoryBreadcrumb, srModPath);
-                }
-
-                if (SettingsManager.Current.GameXXMIModsPaths.TryGetValue("WutheringWaves", out var wwXXMIPath))
-                {
-                    SetBreadcrumbBar(WWXXMIModsDirectoryBreadcrumb, wwXXMIPath);
-                }
-                if (SettingsManager.Current.GameModLibraryPaths.TryGetValue("WutheringWaves", out var wwModPath))
-                {
-                    SetBreadcrumbBar(WWModLibraryDirectoryBreadcrumb, wwModPath);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to initialize all breadcrumbs: {ex.Message}");
-            }
-        }
-
-        private void UpdateSelectorBarBasedOnCurrentGameSelection()
-        {
-            try
-            {
-                // Get current game selection from MainWindow
-                var mainWindow = (App.Current as App)?.MainWindow;
-                if (mainWindow?.Content is FrameworkElement rootElement)
-                {
-                    // Access the GameSelectorComboBox from MainWindow content
-                    var gameComboBox = rootElement.FindName("GameSelectorComboBox") as ComboBox;
-                    if (gameComboBox?.SelectedItem is ComboBoxItem selectedItem)
-                    {
-                        var selectedGame = selectedItem.Tag?.ToString() ?? "";
-                        UpdateSelectorBarForSelectedGame(selectedGame);
-                    }
-                    else
-                    {
-                        // No game selected
-                        UpdateSelectorBarForSelectedGame("");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to update selector bar based on current game selection: {ex.Message}");
-            }
+            // Set BreadcrumbBar in constructor
+            SetBreadcrumbBar(XXMIModsDirectoryBreadcrumb, SettingsManager.XXMIModsDirectorySafe);
+            SetBreadcrumbBar(ModLibraryDirectoryBreadcrumb, SettingsManager.Current.ModLibraryDirectory ?? string.Empty);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -285,18 +116,6 @@ namespace Mod_Manager_X.Pages
             GridLoggingToggle.IsOn = SettingsManager.Current.GridLoggingEnabled;
             ShowOrangeAnimationToggle.IsOn = SettingsManager.Current.ShowOrangeAnimation;
             ModGridZoomToggle.IsOn = SettingsManager.Current.ModGridZoomEnabled;
-            
-            // Initialize SelectorBar to show General settings by default
-            SettingsSelectorBar.SelectedItem = GeneralSelectorItem;
-            GeneralSettingsPanel.Visibility = Visibility.Visible;
-            GenshinImpactSettingsPanel.Visibility = Visibility.Collapsed;
-            HonkaiImpact3rdSettingsPanel.Visibility = Visibility.Collapsed;
-            HonkaiStarRailSettingsPanel.Visibility = Visibility.Collapsed;
-            WutheringWavesSettingsPanel.Visibility = Visibility.Collapsed;
-            ZenlessZoneZeroSettingsPanel.Visibility = Visibility.Collapsed;
-            
-            // Update selector bar based on current game selection
-            UpdateSelectorBarBasedOnCurrentGameSelection();
         }
 
         private void LoadLanguages()
@@ -365,24 +184,106 @@ namespace Mod_Manager_X.Pages
 
         private void XXMIModsDirectoryDefaultButton_Click(object sender, RoutedEventArgs e)
         {
-            RestoreGameSpecificXXMIDefault("ZenlessZoneZero", XXMIModsDirectoryBreadcrumb);
+            var defaultPath = AppConstants.DEFAULT_XXMI_MODS_PATH;
+            var currentPath = SettingsManager.Current.XXMIModsDirectory;
+            
+            // If already default, do nothing
+            if (string.IsNullOrWhiteSpace(currentPath) || 
+                string.Equals(Path.GetFullPath(currentPath), Path.GetFullPath(defaultPath), StringComparison.OrdinalIgnoreCase))
+                return;
+
+            // Clean up symlinks from current (non-default) directory before switching
+            var currentFullPath = Path.GetFullPath(currentPath);
+            if (Directory.Exists(currentFullPath))
+            {
+                Logger.LogInfo($"Cleaning up symlinks from current directory: {currentFullPath}");
+                foreach (var dir in Directory.GetDirectories(currentFullPath))
+                {
+                    if (ZZZ_Mod_Manager_X.Pages.ModGridPage.IsSymlinkStatic(dir))
+                    {
+                        try
+                        {
+                            Directory.Delete(dir, true);
+                            Logger.LogInfo($"Removed symlink: {dir}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.LogError($"Failed to remove symlink: {dir}", ex);
+                        }
+                    }
+                }
+            }
+
+            // Restore to default and recreate symlinks in default location
+            SettingsManager.RestoreDefaults();
+            SetBreadcrumbBar(XXMIModsDirectoryBreadcrumb, SettingsManager.XXMIModsDirectorySafe);
+            ZZZ_Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
+            
+            Logger.LogInfo($"Restored XXMI directory to default: {defaultPath}");
         }
 
         private void ModLibraryDirectoryDefaultButton_Click(object sender, RoutedEventArgs e)
         {
-            RestoreGameSpecificModLibraryDefault("ZenlessZoneZero", ModLibraryDirectoryBreadcrumb);
+            // If already default, do nothing
+            var defaultPath = AppConstants.DEFAULT_MOD_LIBRARY_PATH;
+            var currentPath = SettingsManager.Current.ModLibraryDirectory;
+            
+            Logger.LogInfo($"Restore default mod library button clicked. Current: '{currentPath}', Default: '{defaultPath}'");
+            
+            // If already default, do nothing
+            if (string.IsNullOrWhiteSpace(currentPath))
+            {
+                Logger.LogInfo("Current mod library path is null/empty, already using default - no action needed");
+                return;
+            }
+            
+            try
+            {
+                var currentFullPath = Path.GetFullPath(currentPath);
+                var defaultFullPath = Path.GetFullPath(defaultPath);
+                
+                if (string.Equals(currentFullPath, defaultFullPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    Logger.LogInfo($"Mod library is already using default path ({currentFullPath}) - no action needed");
+                    return;
+                }
+                
+                Logger.LogInfo($"Mod library path needs to be changed from '{currentFullPath}' to '{defaultFullPath}'");
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("Failed to compare mod library paths", ex);
+                return;
+            }
+
+            // Deactivate all mods and remove symlinks
+            var activeModsPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, "Settings", "ActiveMods.json");
+            if (System.IO.File.Exists(activeModsPath))
+            {
+                var allMods = new Dictionary<string, bool>();
+                var currentMods = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, bool>>(System.IO.File.ReadAllText(activeModsPath)) ?? new Dictionary<string, bool>();
+                foreach (var key in currentMods.Keys)
+                {
+                    allMods[key] = false;
+                }
+                var json = System.Text.Json.JsonSerializer.Serialize(allMods, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+                System.IO.File.WriteAllText(activeModsPath, json);
+            }
+            ZZZ_Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
+
+            SettingsManager.RestoreDefaults();
+            SetBreadcrumbBar(ModLibraryDirectoryBreadcrumb, SettingsManager.Current.ModLibraryDirectory ?? string.Empty);
+
+            // Refresh manager
+            if (App.Current is App app && app.MainWindow is MainWindow mainWindow)
+            {
+                mainWindow.RefreshUIAfterLanguageChange();
+            }
         }
 
         private void UpdateTexts()
         {
-            // Update selector bar item text
-            GeneralSelectorText.Text = LanguageManager.Instance.T("SettingsPage_Tab_General");
-            GenshinImpactSelectorText.Text = LanguageManager.Instance.T("SettingsPage_Tab_GenshinImpact");
-            HonkaiImpact3rdSelectorText.Text = LanguageManager.Instance.T("SettingsPage_Tab_HonkaiImpact3rd");
-            HonkaiStarRailSelectorText.Text = LanguageManager.Instance.T("SettingsPage_Tab_HonkaiStarRail");
-            WutheringWavesSelectorText.Text = LanguageManager.Instance.T("SettingsPage_Tab_WutheringWaves");
-            ZenlessZoneZeroSelectorText.Text = LanguageManager.Instance.T("SettingsPage_Tab_ZenlessZoneZero");
-            
+            SettingsTitle.Text = LanguageManager.Instance.T("SettingsPage_Title");
             LanguageLabel.Text = LanguageManager.Instance.T("SettingsPage_Language");
             DynamicModSearchLabel.Text = LanguageManager.Instance.T("SettingsPage_DynamicModSearch_Label");
             GridLoggingLabel.Text = LanguageManager.Instance.T("SettingsPage_GridLogging_Label");
@@ -395,17 +296,6 @@ namespace Mod_Manager_X.Pages
             ThemeSelectorDarkText.Text = LanguageManager.Instance.T("SettingsPage_Theme_Dark");
             XXMIModsDirectoryLabel.Text = LanguageManager.Instance.T("SettingsPage_XXMIModsDirectory");
             ModLibraryDirectoryLabel.Text = LanguageManager.Instance.T("SettingsPage_ModLibraryDirectory");
-            
-            // Game-specific labels
-            GIXXMIModsDirectoryLabel.Text = LanguageManager.Instance.T("SettingsPage_XXMIModsDirectory");
-            GIModLibraryDirectoryLabel.Text = LanguageManager.Instance.T("SettingsPage_ModLibraryDirectory");
-            HIXXMIModsDirectoryLabel.Text = LanguageManager.Instance.T("SettingsPage_XXMIModsDirectory");
-            HIModLibraryDirectoryLabel.Text = LanguageManager.Instance.T("SettingsPage_ModLibraryDirectory");
-            SRXXMIModsDirectoryLabel.Text = LanguageManager.Instance.T("SettingsPage_XXMIModsDirectory");
-            SRModLibraryDirectoryLabel.Text = LanguageManager.Instance.T("SettingsPage_ModLibraryDirectory");
-            WWXXMIModsDirectoryLabel.Text = LanguageManager.Instance.T("SettingsPage_XXMIModsDirectory");
-            WWModLibraryDirectoryLabel.Text = LanguageManager.Instance.T("SettingsPage_ModLibraryDirectory");
-            
             ToolTipService.SetToolTip(XXMIModsDirectoryDefaultButton, LanguageManager.Instance.T("SettingsPage_RestoreDefault_Tooltip"));
             ToolTipService.SetToolTip(ModLibraryDirectoryDefaultButton, LanguageManager.Instance.T("SettingsPage_RestoreDefault_Tooltip"));
             ToolTipService.SetToolTip(OptimizePreviewsButton, LanguageManager.Instance.T("SettingsPage_OptimizePreviews_Tooltip"));
@@ -748,7 +638,7 @@ namespace Mod_Manager_X.Pages
                 var removedCount = 0;
                 foreach (var dir in Directory.GetDirectories(xxmiDir))
                 {
-                    if (Mod_Manager_X.Pages.ModGridPage.IsSymlinkStatic(dir))
+                    if (ZZZ_Mod_Manager_X.Pages.ModGridPage.IsSymlinkStatic(dir))
                     {
                         try
                         {
@@ -766,7 +656,7 @@ namespace Mod_Manager_X.Pages
             }
             
             // Recreate symlinks (should be none since all mods are deactivated)
-            Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
+            ZZZ_Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
             Logger.LogInfo("Safety cleanup completed");
         }
 
@@ -775,7 +665,7 @@ namespace Mod_Manager_X.Pages
             senderButton.IsEnabled = false;
             try
             {
-                var appWindow = (App.Current as Mod_Manager_X.App)?.MainWindow;
+                var appWindow = (App.Current as ZZZ_Mod_Manager_X.App)?.MainWindow;
                 if (appWindow == null)
                 {
                     senderButton.IsEnabled = true;
@@ -802,7 +692,7 @@ namespace Mod_Manager_X.Pages
                                 Logger.LogInfo($"Cleaning up symlinks from current XXMI directory: {currentFullPath}");
                                 foreach (var dir in Directory.GetDirectories(currentFullPath))
                                 {
-                                    if (Mod_Manager_X.Pages.ModGridPage.IsSymlinkStatic(dir))
+                                    if (ZZZ_Mod_Manager_X.Pages.ModGridPage.IsSymlinkStatic(dir))
                                     {
                                         try
                                         {
@@ -823,7 +713,7 @@ namespace Mod_Manager_X.Pages
                     SettingsManager.Current.XXMIModsDirectory = folderPath;
                     SettingsManager.Save();
                     SetBreadcrumbBar(XXMIModsDirectoryBreadcrumb, folderPath);
-                    Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
+                    ZZZ_Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
                     
                     Logger.LogInfo($"Changed XXMI directory to: {folderPath}");
                 }
@@ -835,7 +725,7 @@ namespace Mod_Manager_X.Pages
         private async void XXMIModsDirectoryPickButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button senderButton)
-                await GameSpecificXXMIDirectoryPickAsync(senderButton, "ZenlessZoneZero", XXMIModsDirectoryBreadcrumb);
+                await XXMIModsDirectoryPickButton_ClickAsync(senderButton);
         }
 
         private async Task ModLibraryDirectoryPickButton_ClickAsync(Button senderButton)
@@ -843,7 +733,7 @@ namespace Mod_Manager_X.Pages
             senderButton.IsEnabled = false;
             try
             {
-                var appWindow = (App.Current as Mod_Manager_X.App)?.MainWindow;
+                var appWindow = (App.Current as ZZZ_Mod_Manager_X.App)?.MainWindow;
                 if (appWindow == null)
                 {
                     senderButton.IsEnabled = true;
@@ -869,14 +759,14 @@ namespace Mod_Manager_X.Pages
                         var json = System.Text.Json.JsonSerializer.Serialize(allMods, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
                         System.IO.File.WriteAllText(activeModsPath, json);
                     }
-                    Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
+                    ZZZ_Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
 
                     SettingsManager.Current.ModLibraryDirectory = folderPath;
                     SettingsManager.Save();
                     SetBreadcrumbBar(ModLibraryDirectoryBreadcrumb, folderPath);
 
                     // Create default mod.json in subdirectories
-                    (App.Current as Mod_Manager_X.App)?.EnsureModJsonInModLibrary();
+                    (App.Current as ZZZ_Mod_Manager_X.App)?.EnsureModJsonInModLibrary();
 
                     // Refresh manager
                     if (App.Current is App app && app.MainWindow is MainWindow mainWindow)
@@ -892,183 +782,7 @@ namespace Mod_Manager_X.Pages
         private async void ModLibraryDirectoryPickButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button senderButton)
-                await GameSpecificModLibraryDirectoryPickAsync(senderButton, "ZenlessZoneZero", ModLibraryDirectoryBreadcrumb);
-        }
-
-        // Genshin Impact path selectors
-        private async void GIXXMIModsDirectoryPickButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button senderButton)
-                await GameSpecificXXMIDirectoryPickAsync(senderButton, "GenshinImpact", GIXXMIModsDirectoryBreadcrumb);
-        }
-
-        private void GIXXMIModsDirectoryDefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            RestoreGameSpecificXXMIDefault("GenshinImpact", GIXXMIModsDirectoryBreadcrumb);
-        }
-
-        private async void GIModLibraryDirectoryPickButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button senderButton)
-                await GameSpecificModLibraryDirectoryPickAsync(senderButton, "GenshinImpact", GIModLibraryDirectoryBreadcrumb);
-        }
-
-        private void GIModLibraryDirectoryDefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            RestoreGameSpecificModLibraryDefault("GenshinImpact", GIModLibraryDirectoryBreadcrumb);
-        }
-
-        // Honkai Impact 3rd path selectors
-        private async void HIXXMIModsDirectoryPickButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button senderButton)
-                await GameSpecificXXMIDirectoryPickAsync(senderButton, "HonkaiImpact3rd", HIXXMIModsDirectoryBreadcrumb);
-        }
-
-        private void HIXXMIModsDirectoryDefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            RestoreGameSpecificXXMIDefault("HonkaiImpact3rd", HIXXMIModsDirectoryBreadcrumb);
-        }
-
-        private async void HIModLibraryDirectoryPickButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button senderButton)
-                await GameSpecificModLibraryDirectoryPickAsync(senderButton, "HonkaiImpact3rd", HIModLibraryDirectoryBreadcrumb);
-        }
-
-        private void HIModLibraryDirectoryDefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            RestoreGameSpecificModLibraryDefault("HonkaiImpact3rd", HIModLibraryDirectoryBreadcrumb);
-        }
-
-        // Honkai Star Rail path selectors
-        private async void SRXXMIModsDirectoryPickButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button senderButton)
-                await GameSpecificXXMIDirectoryPickAsync(senderButton, "HonkaiStarRail", SRXXMIModsDirectoryBreadcrumb);
-        }
-
-        private void SRXXMIModsDirectoryDefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            RestoreGameSpecificXXMIDefault("HonkaiStarRail", SRXXMIModsDirectoryBreadcrumb);
-        }
-
-        private async void SRModLibraryDirectoryPickButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button senderButton)
-                await GameSpecificModLibraryDirectoryPickAsync(senderButton, "HonkaiStarRail", SRModLibraryDirectoryBreadcrumb);
-        }
-
-        private void SRModLibraryDirectoryDefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            RestoreGameSpecificModLibraryDefault("HonkaiStarRail", SRModLibraryDirectoryBreadcrumb);
-        }
-
-        // Wuthering Waves path selectors
-        private async void WWXXMIModsDirectoryPickButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button senderButton)
-                await GameSpecificXXMIDirectoryPickAsync(senderButton, "WutheringWaves", WWXXMIModsDirectoryBreadcrumb);
-        }
-
-        private void WWXXMIModsDirectoryDefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            RestoreGameSpecificXXMIDefault("WutheringWaves", WWXXMIModsDirectoryBreadcrumb);
-        }
-
-        private async void WWModLibraryDirectoryPickButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button senderButton)
-                await GameSpecificModLibraryDirectoryPickAsync(senderButton, "WutheringWaves", WWModLibraryDirectoryBreadcrumb);
-        }
-
-        private void WWModLibraryDirectoryDefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            RestoreGameSpecificModLibraryDefault("WutheringWaves", WWModLibraryDirectoryBreadcrumb);
-        }
-
-        // Helper methods for game-specific path handling
-        private async Task GameSpecificXXMIDirectoryPickAsync(Button senderButton, string gameTag, BreadcrumbBar breadcrumb)
-        {
-            senderButton.IsEnabled = false;
-            try
-            {
-                var selectedPath = await ShowFolderPickerAsync("Select XXMI Mods Directory");
-                if (!string.IsNullOrEmpty(selectedPath))
-                {
-                    MainWindow.UpdateGameXXMIPath(gameTag, selectedPath);
-                    // Convert to relative path for display
-                    var relativePath = Path.GetRelativePath(AppContext.BaseDirectory, selectedPath);
-                    SetBreadcrumbBar(breadcrumb, relativePath);
-                }
-            }
-            finally
-            {
-                senderButton.IsEnabled = true;
-            }
-        }
-
-        private async Task GameSpecificModLibraryDirectoryPickAsync(Button senderButton, string gameTag, BreadcrumbBar breadcrumb)
-        {
-            senderButton.IsEnabled = false;
-            try
-            {
-                var selectedPath = await ShowFolderPickerAsync("Select ModLibrary Directory");
-                if (!string.IsNullOrEmpty(selectedPath))
-                {
-                    MainWindow.UpdateGameModLibraryPath(gameTag, selectedPath);
-                    // Convert to relative path for display
-                    var relativePath = Path.GetRelativePath(AppContext.BaseDirectory, selectedPath);
-                    SetBreadcrumbBar(breadcrumb, relativePath);
-                }
-            }
-            finally
-            {
-                senderButton.IsEnabled = true;
-            }
-        }
-
-        private void RestoreGameSpecificXXMIDefault(string gameTag, BreadcrumbBar breadcrumb)
-        {
-            if (SettingsManager.Current.GameXXMIModsPaths.TryGetValue(gameTag, out var defaultPath))
-            {
-                var fullPath = Path.IsPathRooted(defaultPath) ? defaultPath : Path.Combine(AppContext.BaseDirectory, defaultPath.TrimStart('.', '\\', '/'));
-                MainWindow.UpdateGameXXMIPath(gameTag, fullPath);
-                SetBreadcrumbBar(breadcrumb, defaultPath); // Show relative path in breadcrumb
-            }
-        }
-
-        private void RestoreGameSpecificModLibraryDefault(string gameTag, BreadcrumbBar breadcrumb)
-        {
-            if (SettingsManager.Current.GameModLibraryPaths.TryGetValue(gameTag, out var defaultPath))
-            {
-                var fullPath = Path.IsPathRooted(defaultPath) ? defaultPath : Path.Combine(AppContext.BaseDirectory, defaultPath.TrimStart('.', '\\', '/'));
-                MainWindow.UpdateGameModLibraryPath(gameTag, fullPath);
-                SetBreadcrumbBar(breadcrumb, defaultPath); // Show relative path in breadcrumb
-            }
-        }
-
-        private async Task<string> ShowFolderPickerAsync(string title)
-        {
-            return await Task.Run(() =>
-            {
-                var bi = new BROWSEINFO
-                {
-                    lpszTitle = title,
-                    ulFlags = 0x0001 | 0x0040 // BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE
-                };
-
-                var pidl = SHBrowseForFolder(ref bi);
-                if (pidl != IntPtr.Zero)
-                {
-                    var path = new System.Text.StringBuilder(MAX_PATH);
-                    if (SHGetPathFromIDList(pidl, path))
-                    {
-                        return path.ToString();
-                    }
-                }
-                return string.Empty;
-            });
+                await ModLibraryDirectoryPickButton_ClickAsync(senderButton);
         }
 
         // Win32 API Folder Picker using SHBrowseForFolder
@@ -1105,7 +819,7 @@ namespace Mod_Manager_X.Pages
             var stackPanel = new StackPanel();
             var titleBlock = new TextBlock
             {
-                Text = "Mod Manager X",
+                Text = "ZZZ Mod Manager X",
                 FontWeight = Microsoft.UI.Text.FontWeights.Bold,
                 TextAlignment = TextAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -1170,43 +884,6 @@ namespace Mod_Manager_X.Pages
                         else
                             root.RequestedTheme = ElementTheme.Default;
                     }
-                }
-            }
-        }
-
-        private void SettingsSelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
-        {
-            if (sender.SelectedItem is SelectorBarItem item && item.Tag is string section)
-            {
-                // Hide all panels first
-                GeneralSettingsPanel.Visibility = Visibility.Collapsed;
-                GenshinImpactSettingsPanel.Visibility = Visibility.Collapsed;
-                HonkaiImpact3rdSettingsPanel.Visibility = Visibility.Collapsed;
-                HonkaiStarRailSettingsPanel.Visibility = Visibility.Collapsed;
-                WutheringWavesSettingsPanel.Visibility = Visibility.Collapsed;
-                ZenlessZoneZeroSettingsPanel.Visibility = Visibility.Collapsed;
-                
-                // Show the selected panel
-                switch (section)
-                {
-                    case "General":
-                        GeneralSettingsPanel.Visibility = Visibility.Visible;
-                        break;
-                    case "GenshinImpact":
-                        GenshinImpactSettingsPanel.Visibility = Visibility.Visible;
-                        break;
-                    case "HonkaiImpact3rd":
-                        HonkaiImpact3rdSettingsPanel.Visibility = Visibility.Visible;
-                        break;
-                    case "HonkaiStarRail":
-                        HonkaiStarRailSettingsPanel.Visibility = Visibility.Visible;
-                        break;
-                    case "WutheringWaves":
-                        WutheringWavesSettingsPanel.Visibility = Visibility.Visible;
-                        break;
-                    case "ZenlessZoneZero":
-                        ZenlessZoneZeroSettingsPanel.Visibility = Visibility.Visible;
-                        break;
                 }
             }
         }

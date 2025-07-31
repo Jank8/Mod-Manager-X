@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-namespace Mod_Manager_X
+namespace ZZZ_Mod_Manager_X
 {
     /// <summary>
     /// Utility class for common file operations with proper error handling

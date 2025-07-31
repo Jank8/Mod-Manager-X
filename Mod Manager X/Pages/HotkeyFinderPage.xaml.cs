@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace Mod_Manager_X.Pages
+namespace ZZZ_Mod_Manager_X.Pages
 {
     public sealed partial class HotkeyFinderPage : Page
     {
@@ -34,7 +34,7 @@ namespace Mod_Manager_X.Pages
         {
             try
             {
-                var langFile = Mod_Manager_X.SettingsManager.Current?.LanguageFile ?? "en.json";
+                var langFile = ZZZ_Mod_Manager_X.SettingsManager.Current?.LanguageFile ?? "en.json";
                 var langPath = Path.Combine(System.AppContext.BaseDirectory, "Language", "HotkeyFinder", langFile);
                 if (!File.Exists(langPath))
                     langPath = Path.Combine(System.AppContext.BaseDirectory, "Language", "HotkeyFinder", "en.json");
@@ -216,7 +216,7 @@ namespace Mod_Manager_X.Pages
 
             try
             {
-                var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ??
+                var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ??
                     Path.Combine(System.AppContext.BaseDirectory, "ModLibrary");
                 if (!Directory.Exists(modLibraryPath))
                 {

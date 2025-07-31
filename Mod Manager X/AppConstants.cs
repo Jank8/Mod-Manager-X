@@ -1,4 +1,4 @@
-namespace Mod_Manager_X
+namespace ZZZ_Mod_Manager_X
 {
     public static class AppConstants
     {
@@ -25,7 +25,7 @@ namespace Mod_Manager_X
         
         // Default Paths
         public const string DEFAULT_XXMI_MODS_PATH = @".\XXMI\ZZMI\Mods";
-        public const string DEFAULT_MOD_LIBRARY_PATH = @".\ModLibrary\ZZ";
+        public const string DEFAULT_MOD_LIBRARY_PATH = @".\ModLibrary";
         public const string DEFAULT_D3DX_USER_INI_PATH = @".\XXMI\ZZMI\d3dx_user.ini";
         
         // UI Constants

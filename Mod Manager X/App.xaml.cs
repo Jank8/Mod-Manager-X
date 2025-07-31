@@ -24,7 +24,7 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Mod_Manager_X
+namespace ZZZ_Mod_Manager_X
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -130,17 +130,17 @@ namespace Mod_Manager_X
             // Default language loading from settings or en.json
             var langPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, "Language", langFile);
             if (System.IO.File.Exists(langPath))
-                Mod_Manager_X.LanguageManager.Instance.LoadLanguage(langFile);
+                ZZZ_Mod_Manager_X.LanguageManager.Instance.LoadLanguage(langFile);
             _ = EnsureModJsonInModLibrary();
             EnsureDefaultDirectories();
             // Always generate default preset on app startup
-            Mod_Manager_X.Pages.ModGridPage gridPage = new();
+            ZZZ_Mod_Manager_X.Pages.ModGridPage gridPage = new();
             gridPage.SaveDefaultPresetAllInactive();
             
             // Ensure symlinks are properly validated and recreated for active mods on startup
             Logger.LogInfo("Validating and recreating symlinks for active mods on application startup");
-            Mod_Manager_X.Pages.ModGridPage.ValidateAndFixSymlinks();
-            Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
+            ZZZ_Mod_Manager_X.Pages.ModGridPage.ValidateAndFixSymlinks();
+            ZZZ_Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
             Logger.LogInfo("Symlink validation and recreation completed on startup");
             // Removed: ZIP thumbnail cache generation on startup
 
@@ -152,14 +152,14 @@ namespace Mod_Manager_X
             // Start StatusKeeperSync (watcher + timer) if dynamic synchronization is enabled
             if (SettingsManager.Current.StatusKeeperDynamicSyncEnabled)
             {
-                Mod_Manager_X.Pages.StatusKeeperSyncPage.StartWatcherStatic();
-                Mod_Manager_X.Pages.StatusKeeperSyncPage.StartPeriodicSyncStatic();
+                ZZZ_Mod_Manager_X.Pages.StatusKeeperSyncPage.StartWatcherStatic();
+                ZZZ_Mod_Manager_X.Pages.StatusKeeperSyncPage.StartPeriodicSyncStatic();
             }
         }
 
         private void EnsureDefaultDirectories()
         {
-            var xxmiDir = Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory;
+            var xxmiDir = ZZZ_Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory;
             if (!string.IsNullOrWhiteSpace(xxmiDir))
             {
                 try
@@ -176,7 +176,7 @@ namespace Mod_Manager_X
                     // Directory creation failed - not critical for app startup
                 }
             }
-            var modLibDir = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory;
+            var modLibDir = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory;
             if (!string.IsNullOrWhiteSpace(modLibDir))
             {
                 try
@@ -261,7 +261,7 @@ namespace Mod_Manager_X
         public async Task EnsureModJsonInModLibrary()
         {
             // Use current path from settings
-            string modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? System.IO.Path.Combine(System.AppContext.BaseDirectory, "ModLibrary");
+            string modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? System.IO.Path.Combine(System.AppContext.BaseDirectory, "ModLibrary");
             if (!System.IO.Directory.Exists(modLibraryPath)) return;
             
             // List of newly created/updated mod.json files
@@ -401,7 +401,7 @@ namespace Mod_Manager_X
                 foreach (var modPath in newlyCreatedModPaths)
                 {
                     // Use static method that doesn't require HotkeyFinderPage instance
-                    await Mod_Manager_X.Pages.HotkeyFinderPage.AutoDetectHotkeysForModStaticAsync(modPath);
+                    await ZZZ_Mod_Manager_X.Pages.HotkeyFinderPage.AutoDetectHotkeysForModStaticAsync(modPath);
                 }
             }
             
@@ -489,15 +489,15 @@ namespace Mod_Manager_X
                 // Add window close handling - remove symlinks
                 _window.Closed += (s, e) =>
                 {
-                    Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
-                    var modsDir = Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory;
+                    ZZZ_Mod_Manager_X.Pages.ModGridPage.RecreateSymlinksFromActiveMods();
+                    var modsDir = ZZZ_Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory;
                     if (string.IsNullOrWhiteSpace(modsDir))
                         modsDir = System.IO.Path.Combine(System.AppContext.BaseDirectory, "XXMI", "ZZMI", "Mods");
                     if (System.IO.Directory.Exists(modsDir))
                     {
                         foreach (var dir in System.IO.Directory.GetDirectories(modsDir))
                         {
-                            if (Mod_Manager_X.Pages.ModGridPage.IsSymlinkStatic(dir))
+                            if (ZZZ_Mod_Manager_X.Pages.ModGridPage.IsSymlinkStatic(dir))
                             {
                                 System.IO.Directory.Delete(dir, true);
                             }

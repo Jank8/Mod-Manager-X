@@ -15,7 +15,7 @@
   <mp:PhoneIdentity PhoneProductId="09b4a907-3c78-45d3-8083-0f623afac5ad" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Mod Manager X</DisplayName>
+    <DisplayName>ZZZ Mod Manager X</DisplayName>
     <PublisherDisplayName>Virus</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -34,8 +34,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Mod Manager X"
-        Description="Mod Manager X"
+        DisplayName="ZZZ Mod Manager X"
+        Description="ZZZ Mod Manager X"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">

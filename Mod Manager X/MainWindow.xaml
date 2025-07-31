@@ -1,13 +1,13 @@
 <Window
-    x:Class="Mod_Manager_X.MainWindow"
+    x:Class="ZZZ_Mod_Manager_X.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Mod_Manager_X"
+    xmlns:local="using:ZZZ_Mod_Manager_X"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     mc:Ignorable="d"
-    Title="Mod Manager X">
+    Title="ZZZ Mod Manager X">
 
     <Window.SystemBackdrop>
         <MicaBackdrop />
@@ -60,15 +60,7 @@
 
             <NavigationView.PaneCustomContent>
                 <StackPanel x:Name="PaneStackPanel" HorizontalAlignment="Stretch" Padding="16,20,16,0">
-                    <!-- Game Selector -->
-                    <ComboBox x:Name="GameSelectorComboBox" Width="200" HorizontalAlignment="Center" Margin="0,0,0,12" SelectionChanged="GameSelectorComboBox_SelectionChanged" PlaceholderText="Select Game">
-                        <ComboBoxItem Content="Genshin Impact" Tag="GenshinImpact"/>
-                        <ComboBoxItem Content="Honkai Impact 3rd" Tag="HonkaiImpact3rd"/>
-                        <ComboBoxItem Content="Honkai Star Rail" Tag="HonkaiStarRail"/>
-                        <ComboBoxItem Content="Wuthering Waves" Tag="WutheringWaves"/>
-                        <ComboBoxItem Content="Zenless Zone Zero" Tag="ZenlessZoneZero"/>
-                    </ComboBox>
-                    <TextBlock Text="Mod Manager X" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="25" Margin="0,0,0,8"/>
+                    <TextBlock Text="ZZZ Mod Manager X" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="25" Margin="0,0,0,8"/>
                     <ProgressBar x:Name="OrangeAnimationProgressBar" Width="200" IsIndeterminate="True" Margin="0,0,0,8" Visibility="Visible" Opacity="1" />
                     <Grid Margin="0,16,0,8">
                         <Grid.ColumnDefinitions>

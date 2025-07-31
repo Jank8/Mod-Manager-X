@@ -1,8 +1,8 @@
 <Application
-    x:Class="Mod_Manager_X.App"
+    x:Class="ZZZ_Mod_Manager_X.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Mod_Manager_X">
+    xmlns:local="using:ZZZ_Mod_Manager_X">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -58,12 +58,6 @@
                 <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
             </Style>
             <Style TargetType="GridViewItem">
-                <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
-            </Style>
-            <Style TargetType="SelectorBar">
-                <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
-            </Style>
-            <Style TargetType="SelectorBarItem">
                 <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
             </Style>
             <!-- ThemeDictionary for AcrylicBrush -->

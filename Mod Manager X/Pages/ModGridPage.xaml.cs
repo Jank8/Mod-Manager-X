@@ -18,7 +18,7 @@ using System.IO.Compression;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace Mod_Manager_X.Pages
+namespace ZZZ_Mod_Manager_X.Pages
 {
     public sealed partial class ModGridPage : Page
     {
@@ -109,8 +109,8 @@ namespace Mod_Manager_X.Pages
                     });
                     
                     // Save zoom level to settings
-                    Mod_Manager_X.SettingsManager.Current.ZoomLevel = clamped;
-                    Mod_Manager_X.SettingsManager.Save();
+                    ZZZ_Mod_Manager_X.SettingsManager.Current.ZoomLevel = clamped;
+                    ZZZ_Mod_Manager_X.SettingsManager.Save();
                     
                     // Update zoom indicator in main window
                     var mainWindow = (Application.Current as App)?.MainWindow as MainWindow;
@@ -213,11 +213,11 @@ namespace Mod_Manager_X.Pages
             this.InitializeComponent();
             LoadActiveMods();
             LoadSymlinkState();
-            (App.Current as Mod_Manager_X.App)?.EnsureModJsonInModLibrary();
+            (App.Current as ZZZ_Mod_Manager_X.App)?.EnsureModJsonInModLibrary();
             this.Loaded += ModGridPage_Loaded;
             
             // Load saved zoom level from settings
-            _zoomFactor = Mod_Manager_X.SettingsManager.Current.ZoomLevel;
+            _zoomFactor = ZZZ_Mod_Manager_X.SettingsManager.Current.ZoomLevel;
             
             // Handle container generation to apply scaling to new items
             ModsGrid.ContainerContentChanging += ModsGrid_ContainerContentChanging;
@@ -274,7 +274,7 @@ namespace Mod_Manager_X.Pages
             {
                 LogToGridLog("BACKGROUND: Starting background mod data loading");
                 
-                var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
+                var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
                 if (!Directory.Exists(modLibraryPath)) return;
                 
                 var directories = Directory.GetDirectories(modLibraryPath);
@@ -308,8 +308,6 @@ namespace Mod_Manager_X.Pages
                             using var doc = JsonDocument.Parse(json);
                             var root = doc.RootElement;
                             var modCharacter = root.TryGetProperty("character", out var charProp) ? charProp.GetString() ?? "other" : "other";
-                            var modAuthor = root.TryGetProperty("author", out var authorProp) ? authorProp.GetString() ?? "" : "";
-                            var modUrl = root.TryGetProperty("url", out var urlProp) ? urlProp.GetString() ?? "" : "";
                             
                             var name = Path.GetFileName(dir);
                             string previewPath = GetOptimalImagePathStatic(dir);
@@ -320,9 +318,7 @@ namespace Mod_Manager_X.Pages
                                 ImagePath = previewPath, 
                                 Directory = dirName, 
                                 IsActive = false, // Will be updated when actually used
-                                Character = modCharacter,
-                                Author = modAuthor,
-                                Url = modUrl
+                                Character = modCharacter
                             };
                             
                             // Cache the data
@@ -469,7 +465,7 @@ namespace Mod_Manager_X.Pages
             
             // Only handle zoom if enabled in settings
             if ((e.KeyModifiers & Windows.System.VirtualKeyModifiers.Control) == Windows.System.VirtualKeyModifiers.Control &&
-                Mod_Manager_X.SettingsManager.Current.ModGridZoomEnabled)
+                ZZZ_Mod_Manager_X.SettingsManager.Current.ModGridZoomEnabled)
             {
                 var properties = e.GetCurrentPoint(ModsScrollViewer).Properties;
                 var delta = properties.MouseWheelDelta;
@@ -503,7 +499,7 @@ namespace Mod_Manager_X.Pages
             // Handle Ctrl+0 for zoom reset if zoom is enabled
             if (e.Key == Windows.System.VirtualKey.Number0 && 
                 (Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Control) & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down &&
-                Mod_Manager_X.SettingsManager.Current.ModGridZoomEnabled)
+                ZZZ_Mod_Manager_X.SettingsManager.Current.ModGridZoomEnabled)
             {
                 ResetZoom();
                 e.Handled = true;
@@ -798,7 +794,7 @@ namespace Mod_Manager_X.Pages
             if (e.Parameter is string modName && !string.IsNullOrEmpty(modName))
             {
                 // Open mod details for given name
-                var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
+                var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
                 var modDir = Path.Combine(modLibraryPath, modName);
                 var modJsonPath = Path.Combine(modDir, "mod.json");
                 if (File.Exists(modJsonPath))
@@ -839,36 +835,6 @@ namespace Mod_Manager_X.Pages
             
             // Notify MainWindow to update heart button after category title is set
             NotifyMainWindowToUpdateHeartButton();
-        }
-
-        public void RefreshForGame(string selectedGame)
-        {
-            try
-            {
-                _currentCategory = selectedGame; // Store current category
-                if (string.Equals(selectedGame, "other", StringComparison.OrdinalIgnoreCase))
-                {
-                    CategoryTitle.Text = LanguageManager.Instance.T("Category_Other_Mods");
-                    LoadMods(selectedGame);
-                }
-                else if (string.Equals(selectedGame, "Active", StringComparison.OrdinalIgnoreCase))
-                {
-                    CategoryTitle.Text = LanguageManager.Instance.T("Category_Active_Mods");
-                    LoadActiveModsOnly();
-                }
-                else
-                {
-                    CategoryTitle.Text = selectedGame;
-                    LoadMods(selectedGame);
-                }
-                
-                // Notify MainWindow to update heart button after category title is set
-                NotifyMainWindowToUpdateHeartButton();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to refresh for game {selectedGame}: {ex.Message}");
-            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -949,8 +915,6 @@ namespace Mod_Manager_X.Pages
             public string Directory { get; set; } = "";
             public bool IsActive { get; set; }
             public string Character { get; set; } = "";
-            public string Author { get; set; } = "";
-            public string Url { get; set; } = "";
         }
 
 
@@ -959,7 +923,7 @@ namespace Mod_Manager_X.Pages
         {
             LogToGridLog($"LoadMods() called for character: {character}");
             
-            var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
+            var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
             if (!Directory.Exists(modLibraryPath)) return;
             
             var mods = new List<ModTile>();
@@ -1025,7 +989,7 @@ namespace Mod_Manager_X.Pages
 
         private void LoadAllModData()
         {
-            var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
+            var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
             if (!Directory.Exists(modLibraryPath)) return;
             
             _allModData.Clear();
@@ -1091,8 +1055,6 @@ namespace Mod_Manager_X.Pages
                     using var doc = JsonDocument.Parse(json);
                     var root = doc.RootElement;
                     var modCharacter = root.TryGetProperty("character", out var charProp) ? charProp.GetString() ?? "other" : "other";
-                    var modAuthor = root.TryGetProperty("author", out var authorProp) ? authorProp.GetString() ?? "" : "";
-                    var modUrl = root.TryGetProperty("url", out var urlProp) ? urlProp.GetString() ?? "" : "";
                     
                     var name = Path.GetFileName(dir);
                     string previewPath = GetOptimalImagePath(dir);
@@ -1104,9 +1066,7 @@ namespace Mod_Manager_X.Pages
                         ImagePath = previewPath, 
                         Directory = dirName, 
                         IsActive = isActive,
-                        Character = modCharacter,
-                        Author = modAuthor,
-                        Url = modUrl
+                        Character = modCharacter
                     };
                     
                     // Cache the data
@@ -1277,10 +1237,7 @@ namespace Mod_Manager_X.Pages
                 }
                 
                 // Search through the lightweight ModData and create ModTiles for matches
-                var filteredData = _allModData.Where(modData => 
-                    modData.Name.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                    modData.Author.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                    modData.Url.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
+                var filteredData = _allModData.Where(modData => modData.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
                 var filteredMods = new List<ModTile>();
                 
                 foreach (var modData in filteredData)
@@ -1333,7 +1290,7 @@ namespace Mod_Manager_X.Pages
                     return;
 
                 // Always use current path from settings
-                var modsDir = Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory;
+                var modsDir = ZZZ_Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory;
                 if (string.IsNullOrWhiteSpace(modsDir))
                     modsDir = Path.Combine(AppContext.BaseDirectory, "XXMI", "ZZMI", "Mods");
                 var modsDirFull = Path.GetFullPath(modsDir);
@@ -1342,7 +1299,7 @@ namespace Mod_Manager_X.Pages
                     RemoveAllSymlinks(_lastSymlinkTarget);
                 }
                 var linkPath = Path.Combine(modsDirFull, mod.Directory);
-                var absModDir = Path.Combine(Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary"), mod.Directory);
+                var absModDir = Path.Combine(ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary"), mod.Directory);
                 // Remove double slashes in paths
                 linkPath = CleanPath(linkPath);
                 absModDir = CleanPath(absModDir);
@@ -1396,7 +1353,7 @@ namespace Mod_Manager_X.Pages
                     return;
 
                 // Always use the current ModLibraryDirectory setting
-                var modLibraryDir = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory;
+                var modLibraryDir = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory;
                 if (string.IsNullOrWhiteSpace(modLibraryDir))
                     modLibraryDir = Path.Combine(AppContext.BaseDirectory, "ModLibrary");
                 var folder = Path.GetFullPath(Path.Combine(modLibraryDir, mod.Directory));
@@ -1479,7 +1436,7 @@ namespace Mod_Manager_X.Pages
                     return;
 
                 // Get mod folder path
-                var modLibraryDir = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory;
+                var modLibraryDir = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory;
                 if (string.IsNullOrWhiteSpace(modLibraryDir))
                     modLibraryDir = Path.Combine(AppContext.BaseDirectory, "ModLibrary");
                 
@@ -1652,24 +1609,24 @@ namespace Mod_Manager_X.Pages
 
                 // Navigate to mod details page, pass both directory and current category
                 var frame = this.Frame;
-                var navParam = new Mod_Manager_X.Pages.ModDetailPage.ModDetailNav
+                var navParam = new ZZZ_Mod_Manager_X.Pages.ModDetailPage.ModDetailNav
                 {
                     ModDirectory = mod.Directory ?? string.Empty,
                     Category = _currentCategory ?? string.Empty
                 };
-                frame?.Navigate(typeof(Mod_Manager_X.Pages.ModDetailPage), navParam);
+                frame?.Navigate(typeof(ZZZ_Mod_Manager_X.Pages.ModDetailPage), navParam);
             }
         }
 
         public static void RecreateSymlinksFromActiveMods()
         {
-            var modsDir = Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory;
+            var modsDir = ZZZ_Mod_Manager_X.SettingsManager.Current.XXMIModsDirectory;
             var defaultModsDir = Path.Combine(AppContext.BaseDirectory, "XXMI", "ZZMI", "Mods");
             if (string.IsNullOrWhiteSpace(modsDir))
                 modsDir = defaultModsDir;
             var modsDirFull = Path.GetFullPath(modsDir);
             var defaultModsDirFull = Path.GetFullPath(defaultModsDir);
-            var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
+            var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
 
             // Remove symlinks from old location (SymlinkState)
             var symlinkStatePath = Path.Combine(AppContext.BaseDirectory, "Settings", "SymlinkState.json");
@@ -1770,7 +1727,7 @@ namespace Mod_Manager_X.Pages
 
         public void SaveDefaultPresetAllInactive()
         {
-            var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
+            var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
             var allMods = new Dictionary<string, bool>();
             if (Directory.Exists(modLibraryPath))
             {
@@ -1835,7 +1792,7 @@ namespace Mod_Manager_X.Pages
         {
             LogToGridLog("INCREMENTAL: Starting incremental mod refresh");
             
-            var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
+            var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
             if (!Directory.Exists(modLibraryPath)) return;
             
             var changedMods = new List<string>();
@@ -1979,7 +1936,7 @@ namespace Mod_Manager_X.Pages
         {
             // targetPath powinien by� zawsze pe�n� �cie�k� do katalogu moda w bibliotece mod�w
             // Je�li targetPath jest nazw� katalogu, zbuduj pe�n� �cie�k� 
-            var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
+            var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
             if (!Directory.Exists(targetPath))
             {
                 targetPath = Path.Combine(modLibraryPath, Path.GetFileName(targetPath));
@@ -2105,13 +2062,13 @@ namespace Mod_Manager_X.Pages
         public void RefreshUIAfterLanguageChange()
         {
             // Od�wie�enie listy kategorii mod�w w menu nawigacji
-            var mainWindow = ((App)Application.Current).MainWindow as Mod_Manager_X.MainWindow;
+            var mainWindow = ((App)Application.Current).MainWindow as ZZZ_Mod_Manager_X.MainWindow;
             if (mainWindow != null)
             {
                 _ = mainWindow.GenerateModCharacterMenuAsync();
             }
             // Check mod directories and create mod.json in level 1 directories
-            (App.Current as Mod_Manager_X.App)?.EnsureModJsonInModLibrary();
+            (App.Current as ZZZ_Mod_Manager_X.App)?.EnsureModJsonInModLibrary();
             LoadAllMods();
         }
 

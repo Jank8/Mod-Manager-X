@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Mod_Manager_X.Pages
+namespace ZZZ_Mod_Manager_X.Pages
 {
     public sealed partial class GBAuthorUpdatePage : Page
     {
@@ -78,7 +78,7 @@ namespace Mod_Manager_X.Pages
         private void LoadLanguage()
         {
             // Get selected language from manager
-            var langFile = Mod_Manager_X.SettingsManager.Current.LanguageFile ?? "en.json";
+            var langFile = ZZZ_Mod_Manager_X.SettingsManager.Current.LanguageFile ?? "en.json";
             var langPath = Path.Combine(AppContext.BaseDirectory, "Language", "GBAuthorUpdate", langFile);
             if (!File.Exists(langPath)) langPath = Path.Combine(AppContext.BaseDirectory, "Language", "GBAuthorUpdate", "en.json");
             if (File.Exists(langPath))
@@ -184,7 +184,7 @@ namespace Mod_Manager_X.Pages
         {
             try
             {
-                string? modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory;
+                string? modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory;
                 if (string.IsNullOrWhiteSpace(modLibraryPath))
                     modLibraryPath = Path.Combine(AppContext.BaseDirectory, "ModLibrary");
                 var modDirs = Directory.GetDirectories(modLibraryPath);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Diagnostics;
 
-namespace Mod_Manager_X.Pages
+namespace ZZZ_Mod_Manager_X.Pages
 {
     public sealed partial class StatusKeeperBackupPage : Page
     {
@@ -27,7 +27,7 @@ namespace Mod_Manager_X.Pages
         {
             try
             {
-                var langFile = Mod_Manager_X.SettingsManager.Current?.LanguageFile ?? "en.json";
+                var langFile = ZZZ_Mod_Manager_X.SettingsManager.Current?.LanguageFile ?? "en.json";
                 var langPath = Path.Combine(System.AppContext.BaseDirectory, "Language", "StatusKeeper", langFile);
                 if (!File.Exists(langPath))
                     langPath = Path.Combine(System.AppContext.BaseDirectory, "Language", "StatusKeeper", "en.json");
@@ -114,7 +114,7 @@ namespace Mod_Manager_X.Pages
                 int backupCount = 0;
                 int skipCount = 0;
 
-                var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
+                var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
                                    Path.Combine(AppContext.BaseDirectory, "ModLibrary");
 
                 // Count existing backups before operation
@@ -177,7 +177,7 @@ namespace Mod_Manager_X.Pages
                 int restoreCount = 0;
                 int skipCount = 0;
 
-                var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
+                var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
                                    Path.Combine(AppContext.BaseDirectory, "ModLibrary");
 
                 await Task.Run(() => RestoreFromBackups(modLibraryPath, ref restoreCount, ref skipCount));
@@ -224,7 +224,7 @@ namespace Mod_Manager_X.Pages
 
                 int deleteCount = 0;
 
-                var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
+                var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? 
                                    Path.Combine(AppContext.BaseDirectory, "ModLibrary");
 
                 await Task.Run(() => DeleteBackups(modLibraryPath, ref deleteCount));
@@ -263,7 +263,7 @@ namespace Mod_Manager_X.Pages
                 CheckBackupButton.IsEnabled = false;
                 CheckBackupProgressBar.Visibility = Visibility.Visible;
                 
-                var modLibraryPath = Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
+                var modLibraryPath = ZZZ_Mod_Manager_X.SettingsManager.Current.ModLibraryDirectory ?? Path.Combine(AppContext.BaseDirectory, "ModLibrary");
                 int iniCount = 0;
                 int incompleteCount = 0;
 
