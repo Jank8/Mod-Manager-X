@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Mod Manager X (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Mod Manager X (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
